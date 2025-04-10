@@ -4,10 +4,9 @@ services:
     ports:
       - '61616'
   sqlserver:
-    image: 'mcr.microsoft.com/mssql/server:latest'
+    image: 'mcr.microsoft.com/azure-sql-edge:latest'
     environment:
       - 'ACCEPT_EULA=yes'
-      - 'MSSQL_PID=express'
       - 'MSSQL_SA_PASSWORD=verYs3cret'
     ports:
-      - '1433'
+      - '1433:1433'

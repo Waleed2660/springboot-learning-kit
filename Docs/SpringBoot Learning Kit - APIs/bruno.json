@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "SpringBoot Learning Kit - APIs",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
