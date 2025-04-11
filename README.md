@@ -36,6 +36,19 @@ MSSQL is used as the relational database for this project.
     - `ACCEPT_EULA`: `yes`
     - `MSSQL_SA_PASSWORD`: `verYs3cret`
 
+### **DBeaver**
+
+DBeaver is a free, open-source database management tool that supports a wide range of databases, including MSSQL, MySQL,
+PostgreSQL, Oracle, and more. It provides a user-friendly interface for managing and querying databases, making it a 
+popular choice for developers and database administrators.
+
+#### **Download DBeaver Client**:
+- **MacOS**: Install via Homebrew:
+```bash
+  brew install --cask dbeaver-community
+  ```
+- **Official Website**: [Download DBeaver](https://dbeaver.io/download/)
+
 ---
 
 ## **Local Development**
@@ -44,13 +57,13 @@ This project uses Docker Compose to simplify the setup of dependent services.
 ### **Starting All Services**
 To start both ActiveMQ and MSSQL, run:
 ```bash
-docker-compose up -d
+   docker-compose up -d
 ```
 
 ### **Stopping All Services**
 To stop all running services, use:
 ```bash
-docker-compose down
+   docker-compose down
 ```
 
 ---
@@ -64,7 +77,7 @@ This project includes a **Bruno Collection** that contains all the APIs for easy
 
 ### **How to Use**
 1. Download and install the [Bruno API Client](https://www.usebruno.com/).
-2. Import the provided Bruno collection from [Docs Directory](./Docs/SpringBoot%20Learning%20Kit%20-%20APIs) into the client.
+2. Import the provided Bruno collection from [Docs Directory](docs/SpringBoot%20Learning%20Kit%20-%20APIs) into the client.
 3. Use the pre-configured endpoints to test the APIs.
 
 ### **Available Endpoints**
