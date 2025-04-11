@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 4
+    reviewers:
+      - "Waleed2660"
+    groups:
+      core-dependencies:
+        patterns:
+          - "org.springframework.*"
+          - "org.liquibase*"
+          - "com.microsoft.*"
+      activemq-dependencies:
+        patterns:
+          - "org.springframework.boot:spring-boot-starter-activemq"
+          - "org.testcontainers:activemq*"
+      tooling:
+        patterns:
+          - "org.projectlombok*"
+          - "io.micrometer*"
+          - "org.springframework.boot:spring-boot-docker-compose*"
+      all-others:
+        patterns:
+          - "*"
