@@ -1,6 +1,7 @@
 package com.springboot.learning.kit.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
@@ -19,6 +20,7 @@ public class ManagementController {
 
     private final JmsTemplate jmsTemplate;
     private final DataSource dataSource;
+    private final RabbitTemplate rabbitTemplate;
 
     /**
      * Health check endpoint to verify the status of ActiveMQ and database connection.
@@ -35,6 +37,17 @@ public class ManagementController {
             healthStatus.append("ActiveMQ: OK\n");
         } catch (Exception e) {
             healthStatus.append("ActiveMQ: DOWN\n");
+        }
+
+        // Check RabbitMQ
+        try {
+             rabbitTemplate.execute(channel -> {
+                 channel.basicPublish("", "healthcheck", null, "ping".getBytes());
+                 return null;
+             });
+            healthStatus.append("RabbitMQ: OK\n");
+        } catch (Exception e) {
+            healthStatus.append("RabbitMQ: DOWN\n");
         }
 
         // Check Database

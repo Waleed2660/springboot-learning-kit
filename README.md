@@ -1,6 +1,6 @@
 # Spring Boot Learning Kit
 
-A Spring Boot application designed for learning and experimentation with modern technologies like ActiveMQ and MSSQL. This project demonstrates the integration of messaging and database services using Docker for local development.
+A Spring Boot application designed for learning and experimentation with modern technologies like ActiveMQ, RabbitMQ & Postgres.
 
 ---
 
@@ -9,7 +9,8 @@ A Spring Boot application designed for learning and experimentation with modern 
 - **Spring Boot**: Framework for building the application.
 - **Gradle**: Build automation tool.
 - **ActiveMQ**: Message broker for asynchronous communication.
-- **MSSQL**: Relational database for data storage.
+- **RabbitMQ**: Alternative message broker for asynchronous communication.
+- **PostgreSQL**: Relational database for data storage.
 - **Docker**: Containerization platform for local development.
 
 ---
@@ -27,14 +28,27 @@ ActiveMQ is used as the message broker in this project.
 
 ---
 
-## **MSSQL**
-MSSQL is used as the relational database for this project.
+## **RabbitMQ**
+RabbitMQ is an alternative message broker that can be used in this project.
+### **Accessing RabbitMQ**
+- **Broker Port**: `5672`
+- **Web Console Port**: `15672`
+- **Web Console URL**: [http://localhost:15672](http://localhost:15672)
+- - **Default Credentials**:
+  - Username: `user`
+  - Password: `password`
+
+---
+
+## **PostgreSQL**
+PostgreSQL is used as the relational database in this project.
 
 ### **Database Configuration**
-- **Port**: `1433`
-- **Environment Variables**:
-    - `ACCEPT_EULA`: `yes`
-    - `MSSQL_SA_PASSWORD`: `verYs3cret`
+- DB_NAME: `Order_Service`
+- DB_HOST: `localhost`
+- DB_PORT: `5432`
+- DB_USER: `user`
+- DB_PASSWORD: `password`
 
 ### **DBeaver**
 

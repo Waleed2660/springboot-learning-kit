@@ -22,6 +22,9 @@
             <column name="zip_code" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
+            <column name="country" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 

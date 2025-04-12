@@ -3,8 +3,8 @@ services:
     container_name: activemq_broker
     image: 'apache/activemq-classic:latest'
     ports:
-      - '61616:61616'
-      - '8161:8161'
+      - '61616:61616' # AMQP port
+      - '8161:8161' # Web console port
   postgres:
     image: postgres:15
     container_name: order_service_db
@@ -13,4 +13,13 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "5432:5432" # PostgreSQL port
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_broker
+    ports:
+      - "5672:5672"   # AMQP port
+      - "15672:15672" # Management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password

@@ -14,6 +14,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 

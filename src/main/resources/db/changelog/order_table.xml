@@ -16,6 +16,9 @@
             <column name="customer_address_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="order_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
             <column name="total_amount" type="DECIMAL(10,2)">
                 <constraints nullable="false"/>
             </column>
