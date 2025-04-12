@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'org.liquibase.gradle' version '2.2.0'
 }
 
 group = 'com.springboot.learning.kit'
@@ -18,6 +19,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	liquibaseRuntime
 }
 
 repositories {
@@ -32,13 +34,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-activemq'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 	implementation 'org.liquibase:liquibase-core'
+	implementation 'org.postgresql:postgresql:42.7.2'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
+    // Liquibase dependencies
+	liquibaseRuntime 'org.liquibase:liquibase-core'
+	liquibaseRuntime 'org.postgresql:postgresql:42.7.2'
+	liquibaseRuntime 'info.picocli:picocli:4.7.5'
 
 	annotationProcessor 'org.projectlombok:lombok'
 
@@ -47,8 +56,22 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.testcontainers:activemq'
 	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation 'org.testcontainers:mssqlserver'
+	testImplementation 'org.testcontainers:postgresql:1.19.0'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+liquibase {
+	activities {
+		main {
+			changeLogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
+			url 'jdbc:postgresql://localhost:5432/Order_Service'
+			username 'user'
+			password 'password'
+			driver 'org.postgresql.Driver'
+		}
+	}
+	runList = 'main'
 }
 
 tasks.named('test') {

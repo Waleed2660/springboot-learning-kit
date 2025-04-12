@@ -5,38 +5,29 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-    <changeSet id="5" author="waleed">
-        <createTable tableName="order">
+    <changeSet id="3" author="waleed">
+        <createTable tableName="order_item">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="customer_details_id" type="BIGINT">
+            <column name="order_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="customer_address_id" type="BIGINT">
+            <column name="product_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="total_amount" type="DECIMAL(10,2)">
+            <column name="quantity" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="order_created" type="TIMESTAMP">
+            <column name="price" type="DECIMAL(10,2)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
         <addForeignKeyConstraint
-                baseTableName="order"
-                baseColumnNames="customer_details_id"
-                referencedTableName="customer_details"
+                baseTableName="order_item"
+                baseColumnNames="order_id"
+                referencedTableName="order"
                 referencedColumnNames="id"
-                constraintName="fk_order_customer_details"/>
-
-        <addForeignKeyConstraint
-                baseTableName="order"
-                baseColumnNames="customer_address_id"
-                referencedTableName="customer_address"
-                referencedColumnNames="id"
-                constraintName="fk_order_customer_address"/>
+                constraintName="fk_order_item_order"/>
     </changeSet>
-
 </databaseChangeLog>

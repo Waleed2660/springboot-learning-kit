@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 
+/**
+ * Configuration class for setting up ActiveMQ with Spring Boot.
+ * This class enables JMS and provides beans for the connection factory and JMS template.
+ */
 @Configuration
 @EnableJms
 public class ActiveMQConfig {
@@ -21,6 +25,11 @@ public class ActiveMQConfig {
     @Value("${spring.activemq.password}")
     private String brokerPassword;
 
+    /**
+     * Creates and configures a {@link ConnectionFactory} for ActiveMQ.
+     *
+     * @return a configured {@link ConnectionFactory} instance
+     */
     @Bean
     public ConnectionFactory connectionFactory() {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory();
@@ -30,6 +39,12 @@ public class ActiveMQConfig {
         return factory;
     }
 
+    /**
+     * Creates and configures a {@link JmsTemplate} for sending and receiving messages.
+     *
+     * @param connectionFactory the {@link ConnectionFactory} to be used by the {@link JmsTemplate}
+     * @return a configured {@link JmsTemplate} instance
+     */
     @Bean
     public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
         return new JmsTemplate(connectionFactory);

@@ -1,13 +1,16 @@
 services:
   activemq:
+    container_name: activemq_broker
     image: 'apache/activemq-classic:latest'
     ports:
       - '61616:61616'
       - '8161:8161'
-  sqlserver:
-    image: 'mcr.microsoft.com/azure-sql-edge:latest'
+  postgres:
+    image: postgres:15
+    container_name: order_service_db
     environment:
-      - 'ACCEPT_EULA=yes'
-      - 'MSSQL_SA_PASSWORD=verYs3cret'
+      POSTGRES_DB: Order_Service
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     ports:
-      - '1433:1433'
+      - "5432:5432"
