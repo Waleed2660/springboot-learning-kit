@@ -31,35 +31,47 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-activemq'
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
-	implementation 'org.liquibase:liquibase-core'
-	implementation 'org.postgresql:postgresql:42.7.2'
 
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	def springBootVersion = '3.4.4'
+	def postgresVersion = '42.7.2'
+	def liquibaseVersion = '4.29.2'
+	def picocliVersion = '4.7.5'
+	def prometheusVersion = '1.14.5'
+	def lombokVersion = '1.18.36'
+	def springRestDocsVersion = '3.0.3'
+	def testContainerVersion = '1.20.6'
+	def testContainerPostgresVersion = '1.19.0'
+	def junitPlatformVersion = '1.11.4'
+
+	implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+	implementation "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
+	implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
+	implementation "org.postgresql:postgresql:${postgresVersion}"
+
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	developmentOnly "org.springframework.boot:spring-boot-docker-compose:${springBootVersion}"
+	runtimeOnly "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
 
     // Liquibase dependencies
-	liquibaseRuntime 'org.liquibase:liquibase-core'
-	liquibaseRuntime 'org.postgresql:postgresql:42.7.2'
-	liquibaseRuntime 'info.picocli:picocli:4.7.5'
+	liquibaseRuntime "org.liquibase:liquibase-core:${liquibaseVersion}"
+	liquibaseRuntime "org.postgresql:postgresql:${postgresVersion}"
+	liquibaseRuntime "info.picocli:picocli:${picocliVersion}"
 
-	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'org.testcontainers:activemq'
-	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation 'org.testcontainers:postgresql:1.19.0'
+	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+	testImplementation "org.springframework.boot:spring-boot-testcontainers:${springBootVersion}"
+	testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${springRestDocsVersion}"
+	testImplementation "org.testcontainers:activemq:${testContainerVersion}"
+	testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
+	testImplementation "org.testcontainers:postgresql:${testContainerPostgresVersion}"
 
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
 }
 
 liquibase {
