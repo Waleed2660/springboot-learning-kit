@@ -13,9 +13,11 @@ updates:
           - "org.springframework.*"
           - "org.liquibase*"
           - "com.microsoft.*"
-      activemq-dependencies:
+          - "org.postgresql:*"
+      messaging-dependencies:
         patterns:
           - "org.springframework.boot:spring-boot-starter-activemq"
+          - "org.springframework.boot:spring-boot-starter-amqp"
           - "org.testcontainers:activemq*"
       tooling:
         patterns:
