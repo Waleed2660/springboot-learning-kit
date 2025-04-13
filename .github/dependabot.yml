@@ -11,7 +11,6 @@ updates:
       core-dependencies:
         patterns:
           - "org.springframework.*"
-          - "org.liquibase*"
           - "com.microsoft.*"
           - "org.postgresql:*"
       messaging-dependencies:
@@ -24,6 +23,7 @@ updates:
           - "org.projectlombok*"
           - "io.micrometer*"
           - "org.springframework.boot:spring-boot-docker-compose*"
+          - "org.liquibase*"
       all-others:
         patterns:
           - "*"
