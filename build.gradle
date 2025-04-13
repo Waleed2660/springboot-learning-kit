@@ -33,6 +33,7 @@ ext {
 dependencies {
 
 	def springBootVersion = '3.4.4'
+	def camelVersion = '4.4.0'
 	def postgresVersion = '42.7.2'
 	def liquibaseVersion = '4.29.2'
 	def picocliVersion = '4.7.5'
@@ -49,6 +50,12 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+
+	// These dependencies are required for the Spring Boot application to work with Camel
+	implementation "org.apache.camel.springboot:camel-spring-boot-starter:${camelVersion}"
+	implementation "org.apache.camel.springboot:camel-jms-starter:${camelVersion}"
+	implementation "org.apache.camel.springboot:camel-activemq-starter:${camelVersion}"
+
 	implementation "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
 	implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 	implementation "org.postgresql:postgresql:${postgresVersion}"

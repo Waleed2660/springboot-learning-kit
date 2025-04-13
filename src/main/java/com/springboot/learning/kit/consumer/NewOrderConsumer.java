@@ -9,25 +9,23 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class OrderConsumer {
+public class NewOrderConsumer {
 
     /**
-     * Consumes messages from the "order.placement.queue".
+     * Consumes messages from the ActiveMQ
      *
      * @param message the message received from the queue
      */
-    @JmsListener(destination = "order.placement.queue")
-    public void consumeNewOrder(String message) {
-        log.error("Received new order message: {}", message);
+    public void processActiveMQOrder(String message) {
+        log.error("Received new ActiveMQ order message: {}", message);
     }
 
     /**
-     * Consumes messages from the "order.cancellation.queue".
+     * Consumes messages from RabbitMQ
      *
      * @param message the message received from the queue
      */
-    @JmsListener(destination = "order.cancellation.queue")
-    public void consumeOrderCancellation(String message) {
+    public void processRabbitMQOrder(String message) {
 
 
     }

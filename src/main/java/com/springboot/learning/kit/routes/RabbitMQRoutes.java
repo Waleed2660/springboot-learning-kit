@@ -1,4 +1,4 @@
-package com.springboot.learning.kit.config;
+package com.springboot.learning.kit.routes;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMQRoutesConfig {
+public class RabbitMQRoutes {
 
     @Value("${rmq.order.placement.queue}")
     private String orderPlacementQueue;
