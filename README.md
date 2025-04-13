@@ -110,4 +110,6 @@ The application provides a health check endpoint to verify its status:
 ---
 
 ## **License**
-This project is licensed under the MIT License.
+
+This project is licensed under the [CC BY-NC 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/).  
+You may use, modify, and share it non-commercially with attribution.
