@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-    <changeSet id="3" author="waleed">
+    <changeSet id="item_1" author="waleed">
         <createTable tableName="order_item">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -19,7 +19,7 @@
             <column name="quantity" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="price" type="DECIMAL(10,2)">
+            <column name="price_per_unit" type="DECIMAL(19,4)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -27,7 +27,7 @@
                 baseTableName="order_item"
                 baseColumnNames="order_id"
                 referencedTableName="order"
-                referencedColumnNames="id"
+                referencedColumnNames="uuid"
                 constraintName="fk_order_item_order"/>
     </changeSet>
 </databaseChangeLog>

@@ -5,15 +5,15 @@ import com.springboot.learning.kit.exception.OrderValidationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderTypeValidator implements Validator<OrderType> {
+public class OrderTypeValidator implements Validator<String> {
 
     @Override
-    public void validate(OrderType orderType) throws OrderValidationException {
-        if (orderType == null) {
+    public void validate(String orderType) throws OrderValidationException {
+        if (orderType == null || orderType.isEmpty()) {
             throw new OrderValidationException("Order type cannot be null");
         }
 
-        if (OrderType.getAllOrderTypes().contains(orderType)) {
+        if (!OrderType.getAllOrderTypes().contains(OrderType.valueOf(orderType))) {
             throw new OrderValidationException("Invalid order type: " + orderType);
         }
     }

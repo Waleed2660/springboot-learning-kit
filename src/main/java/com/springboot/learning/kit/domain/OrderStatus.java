@@ -1,16 +1,16 @@
 package com.springboot.learning.kit.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Setter
-@Getter
+@Data
+@Builder
 @Table(name = "order_status")
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,6 @@ public class OrderStatus {
     @Column(name = "description")
     private String description;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 }

@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class ActiveMQRoutes extends RouteBuilder {
 
+    private static final int MAX_RETRIES = 1;
+
     @Value("${amq.order.placement.queue}")
     private String orderPlacementQueue;
 
@@ -39,7 +41,7 @@ public class ActiveMQRoutes extends RouteBuilder {
                 .routeId("orderPlacementRoute")
                 .log(LoggingLevel.INFO, "Processing new order: ${body}")
                 .onException(Exception.class)
-                .maximumRedeliveries(3)
+                .maximumRedeliveries(MAX_RETRIES)
                 .to("activemq:queue:" + orderPlacementQueueDlq)
                 .log(LoggingLevel.ERROR, "Order processing failed: ${exception.message}")
                 .handled(true)

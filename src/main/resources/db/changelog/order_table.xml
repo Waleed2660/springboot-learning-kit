@@ -5,9 +5,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-    <changeSet id="5" author="waleed">
+    <changeSet id="order_1" author="waleed">
         <createTable tableName="order">
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="uuid" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="customer_details_id" type="BIGINT">
@@ -19,7 +19,10 @@
             <column name="order_type" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="total_amount" type="DECIMAL(10,2)">
+            <column name="total_amount" type="DECIMAL(19,4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="VARCHAR(3)">
                 <constraints nullable="false"/>
             </column>
             <column name="order_created" type="TIMESTAMP">

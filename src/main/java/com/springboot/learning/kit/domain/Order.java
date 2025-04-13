@@ -1,42 +1,37 @@
 package com.springboot.learning.kit.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@Builder
 @Table(name = "order")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_details_id")
-    private CustomerDetails customerDetails;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_address_id")
-    private CustomerAddress customerAddress;
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems;
-
-    @Column(name = "total_amount")
-    private double totalAmount;
-
-    @Column(name = "order_created", nullable = false)
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime orderCreated;
+    @Column(name = "uuid")
+    private Long uuid;
 
     @Column(name = "order_type")
     private OrderType orderType;
 
+    @JoinColumn(name = "customer_details_id")
+    private Long customerDetailsId;
+
+    @JoinColumn(name = "customer_address_id")
+    private Long customerAddressId;
+
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
+
+    @Column(name = "currency")
+    private String currency;
+
+    @Column(name = "order_created")
+    private LocalDateTime orderCreated;
 }

@@ -1,6 +1,6 @@
 package com.springboot.learning.kit.controller;
 
-import com.springboot.learning.kit.domain.Order;
+import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.service.OrderProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,13 +20,13 @@ public class OrderController {
     /**
      * Endpoint to submit an order for processing.
      *
-     * @param order the order to be processed
+     * @param orderRequest the order to be processed
      * @return a ResponseEntity indicating the result of the operation
      */
     @PostMapping("/submit")
-    public ResponseEntity<String> submitOrder(@RequestBody Order order) {
+    public ResponseEntity<String> submitOrder(@RequestBody OrderRequest orderRequest) {
         try {
-            orderProcessingService.processNewOrder(order);
+            orderProcessingService.processNewOrder(orderRequest);
             return ResponseEntity.ok("Order submitted successfully");
         }
         catch (Exception e) {

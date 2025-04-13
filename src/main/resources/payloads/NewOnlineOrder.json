@@ -1,0 +1,30 @@
+{
+  "uuid": 12345,
+  "orderType": "ONLINE",
+  "customerDetails": {
+    "name": "John Doe",
+    "email": "john.doe@email.com",
+    "phone": "+1234567890"
+  },
+  "customerAddress": {
+    "street": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "zipCode": "10001",
+    "country": "USA"
+  },
+  "orderItems": [
+    {
+      "productId": 1,
+      "quantity": 2,
+      "pricePerUnit": 29.99
+    },
+    {
+      "productId": 2,
+      "quantity": 1,
+      "pricePerUnit": 49.99
+    }
+  ],
+  "orderAmount": 109.97,
+  "currency": "USD"
+}

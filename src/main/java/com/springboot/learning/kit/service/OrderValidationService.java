@@ -1,6 +1,6 @@
 package com.springboot.learning.kit.service;
 
-import com.springboot.learning.kit.domain.Order;
+import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.exception.OrderValidationException;
 import com.springboot.learning.kit.validator.OrderTypeValidator;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +15,10 @@ public class OrderValidationService {
     /**
      * Validates the given order.
      *
-     * @param order the order to be validated
+     * @param orderRequest the order to be validated
      * @throws OrderValidationException if the order is invalid
      */
-    public void validateOrder(Order order) {
-        orderTypeValidator.validate(order.getOrderType());
+    public void validateOrder(OrderRequest orderRequest) {
+        orderTypeValidator.validate(orderRequest.getOrderType());
     }
 }
