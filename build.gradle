@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'org.asciidoctor.jvm.convert' version '4.0.4'
 	id 'org.liquibase.gradle' version '2.2.0'
 }
 
@@ -35,13 +35,13 @@ dependencies {
 	def springBootVersion = '3.4.4'
 	def postgresVersion = '42.7.2'
 	def liquibaseVersion = '4.29.2'
-	def picocliVersion = '4.7.5'
+	def picocliVersion = '4.7.6'
 	def prometheusVersion = '1.14.5'
 	def lombokVersion = '1.18.36'
 	def springRestDocsVersion = '3.0.3'
 	def testContainerVersion = '1.20.6'
 	def testContainerPostgresVersion = '1.19.0'
-	def junitPlatformVersion = '1.11.4'
+	def junitPlatformVersion = '1.12.2'
 
 	implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
