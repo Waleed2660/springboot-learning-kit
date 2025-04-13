@@ -18,7 +18,7 @@ updates:
         patterns:
           - "org.springframework.boot:spring-boot-starter-activemq"
           - "org.springframework.boot:spring-boot-starter-amqp"
-          - "org.testcontainers:activemq*"
+          - "org.testcontainers:*"
       tooling:
         patterns:
           - "org.projectlombok*"
