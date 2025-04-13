@@ -1,0 +1,11 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/actuator/health
+  body: none
+  auth: inherit
+}

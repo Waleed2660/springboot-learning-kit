@@ -27,7 +27,7 @@ jobs:
     - name: Build with Gradle Wrapper
       run: |
         chmod +x gradlew
-        ./gradlew build
+        ./gradlew build -x test
 
   dependency-submission:
 

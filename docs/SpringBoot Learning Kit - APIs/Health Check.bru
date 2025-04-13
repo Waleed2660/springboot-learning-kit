@@ -1,0 +1,15 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/management/healthcheck
+  body: none
+  auth: inherit
+}
+
+headers {
+  Accept: text/plain
+}

@@ -1,0 +1,11 @@
+meta {
+  name: All Metrics
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/actuator/metrics
+  body: none
+  auth: inherit
+}
