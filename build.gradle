@@ -43,6 +43,7 @@ dependencies {
 	def testContainerVersion = '1.20.6'
 	def testContainerPostgresVersion = '1.19.0'
 	def junitPlatformVersion = '1.11.4'
+	def openApiSpringDocsVersion = '2.8.6'
 
 	implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
@@ -50,6 +51,7 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openApiSpringDocsVersion}"
 
 	// These dependencies are required for the Spring Boot application to work with Camel
 	implementation "org.apache.camel.springboot:camel-spring-boot-starter:${camelVersion}"
