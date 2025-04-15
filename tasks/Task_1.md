@@ -7,14 +7,19 @@ This section includes setup instructions & how to get the app running locally on
 
 ---
 
+**_Note:_** _Build a habit to never hardcode credentials for testing & production Environments in your code. Always use
+environment variables or configuration files to manage sensitive information. As we go along, we'll see how we can configure those._
+
+---
+
 ### **Spin up Database & Messaging Brokers**
 
 Execute following command while you're in root directory of the project. 
 ```bash
   docker compose up -d
 ```
-This should spin up 3 containers on your machine i.e **order_service_db**, **activemq_broker** and **rabbitmq_broker**.
-The configuration for these containers is in [compose.yaml](../compose.yaml) file. This file defines what image to use,
+This should pull 3 images & spin up 3 containers on your machine i.e **order_service_db**, **activemq_broker** and **rabbitmq_broker**.
+The configuration for these containers is stored in [compose.yaml](../compose.yaml) file. This file defines what image to use,
 what ports to expose and what environment variables to set.
 
 ---
@@ -24,6 +29,15 @@ You can run following command to list all active containers on your machine.
 ```bash
   docker ps
 ```
+
+---
+
+### **Stop active containers**
+To stop all the running containers, you can do that either through Docker Desktop UI or you can run the following command while in root directory of the project:
+```bash
+  docker compose down
+```
+
 
 ---
 
@@ -51,6 +65,7 @@ you can use DBeaver or any other database client of your choice. Simply connect 
 - **Password**: `password`
 
 For this exercise, I'll use DBeaver:
+
 ![img.png](resources/dbeaver_setup.png)
 
 You should be able to view the tables under the `public` schema.
@@ -60,10 +75,6 @@ You should be able to view the tables under the `public` schema.
 
 ---
 
-**_Note:_** _Build a habit to never hardcode credentials for testing & production Environments in your code. Always use 
-environment variables or configuration files to manage sensitive information. As we go along, we'll see how we can configure those._
-
----
 
 ### Time to run the application
 Now you can now run the application. This can be done in different ways.
@@ -88,17 +99,17 @@ Now, you can hit the HealthCheck API to verify that the application is up and ru
 
 #### **RabbitMQ**
 
-You can access the RabbitMQ management UI at [http://localhost:15672](http://localhost:15672) using the following credentials:
+You can access the RabbitMQ management UI at [](http://localhost:15672) using the following credentials:
 - **Username**: `user`
 - **Password**: `password`
 
 You should be able to view a queue & a dlq on the UI. You can also view the active 
 consumer (Spring Boot application) by clicking on the queue.
 
-![img.png](resources/rabbitMQ_ui_intro.png)
+![img.png](resources/rabbitmq_intro_pic.png)
 
 #### **ActiveMQ**
-You can access the ActiveMQ management UI at [http://localhost:8161](http://localhost:8161) using the following credentials:
+You can access the ActiveMQ management UI at [http://localhost:8161/admin/queues.jsp](http://localhost:8161/admin/queues.jsp) using the following credentials:
 - **Username**: `admin`
 - **Password**: `admin`
 
@@ -106,3 +117,7 @@ You should be able to view a queue & a dlq on the UI. You should see 1 active co
 
 ![img.png](resources/activemq_ui_intro.png)
 
+---
+
+### Task Complete
+Now you have a fully functional Spring Boot application with PostgreSQL and RabbitMQ/ActiveMQ set up. You can start exploring the APIs and the messaging functionality if you like.
