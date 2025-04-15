@@ -117,6 +117,25 @@ You should be able to view a queue & a dlq on the UI. You should see 1 active co
 
 ![img.png](resources/activemq_ui_intro.png)
 
+
+---
+
+### **Useful IntelliJ Plugins**
+- **Lombok**: Make sure to install the Lombok plugin in IntelliJ. This will enable code generation for getters, setters, and other annotations.
+- **Pretty JSON Log**: This plugin formats JSON logs in a readable format when running your application in IntelliJ.
+- **Rainbow Brackets**: This plugin adds rainbow colors to brackets, making it easier to read nested code.
+- **SonarQube For IDE**: This plugin provides real-time feedback on code quality and security issues as you write code.
+
+
+### **IntelliJ Shortcuts**
+
+IntelliJ offers a lot of features to make your development experience smoother. Here are a few tips:
+- **Find in Project**: Use `Ctrl + Shift + F` (Windows/Linux) or `Cmd + Shift + F` (Mac) to search for text across the entire project.
+- **Code Formatting**: Use `Ctrl + Alt + L` (Windows/Linux) or `Cmd + Option + L` (Mac) to format your code.
+- **Refactoring**: Use `Shift + F6` to rename a variable or method and automatically update all usages.
+- **Version Control**: If you're using Git, IntelliJ has built-in support for version control. You can commit changes, view the history, and resolve merge conflicts directly from the IDE.
+- **Terminal**: IntelliJ has a built-in terminal that allows you to run shell commands without leaving the IDE. You can access it by clicking on the `Terminal` tab at the bottom of the window.
+
 ---
 
 ### Task Complete
