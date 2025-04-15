@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQRoutes {
 
+    public static final String EXCHANGE = "order.exchange";
+
     @Value("${rmq.order.placement.queue}")
     private String orderPlacementQueue;
 
@@ -34,39 +36,37 @@ public class RabbitMQRoutes {
         return new Queue("healthcheck", true); // durable queue
     }
 
-    // Define exchanges
-    @Bean
-    public TopicExchange mainExchange() {
-        return new TopicExchange("main.exchange");
-    }
-
     @Bean
     public TopicExchange dlqExchange() {
         return new TopicExchange("dlq.exchange");
     }
 
-    // Queue: order.queue
     @Bean
-    public Queue orderQueue() {
-        return QueueBuilder.durable("rmq.order.placement.queue")
-                .withArgument("x-dead-letter-exchange", "dlq.exchange")
-                .withArgument("x-dead-letter-routing-key", "order.queue.dlq")
+    public DirectExchange exchange() {
+        return new DirectExchange(EXCHANGE);
+    }
+
+    @Bean
+    public Queue mainQueue() {
+        return QueueBuilder.durable(orderPlacementQueue)
+                .withArgument("x-dead-letter-exchange", EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", orderPlacementQueueDlq)
                 .build();
     }
 
     @Bean
-    public Queue orderDlq() {
-        return QueueBuilder.durable("rmq.order.placement.queue.dlq").build();
+    public Queue deadLetterQueue() {
+        return QueueBuilder.durable(orderPlacementQueueDlq).build();
     }
 
     @Bean
-    public Binding orderQueueBinding() {
-        return BindingBuilder.bind(orderQueue()).to(mainExchange()).with("order.queue");
+    public Binding mainBinding(Queue mainQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(mainQueue).to(exchange).with(orderPlacementQueue);
     }
 
     @Bean
-    public Binding orderDlqBinding() {
-        return BindingBuilder.bind(orderDlq()).to(dlqExchange()).with("order.queue.dlq");
+    public Binding dlqBinding(Queue deadLetterQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(deadLetterQueue).to(exchange).with(orderPlacementQueueDlq);
     }
 
 }

@@ -7,6 +7,7 @@ import com.springboot.learning.kit.exception.OrderProcessingException;
 import com.springboot.learning.kit.service.OrderProcessingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,9 +43,11 @@ public class NewOrderConsumer {
      *
      * @param message the message received from the queue
      */
+    @RabbitListener(queues = "${rmq.order.placement.queue}")
     public void processRabbitMQOrder(String message) {
-
-
+        log.error("Received new RabbitMQ order message");
+        OrderRequest orderRequest = toOrderRequest(message);
+        orderProcessingService.processNewOrder(orderRequest);
     }
 
     private OrderRequest toOrderRequest(String message) {
