@@ -185,7 +185,7 @@ We're throwing `OrderValidationException` with relevant message if the name is e
 ![img_1.png](resources/task2_namevalid.png)
 
 **Email:**
-Here you can see that we've wrapped the validation logic inside a `try-catch` block. If validation fails, we'll throw our
+Here you can see that we've wrapped the validation logic with a `try-catch` block. If validation fails, we'll throw our
 custom `OrderValidationException` with relevant message.
 ![img.png](resources/task2_emailvalid.png)
 
