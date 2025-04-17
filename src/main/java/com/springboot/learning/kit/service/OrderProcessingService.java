@@ -22,8 +22,6 @@ public class OrderProcessingService {
         // Perform validation on the incoming order request
         orderValidationService.validateOrder(orderRequest);
 
-        log.error("order_type_enum: {}", OrderType.valueOf(orderRequest.getOrderType()));
-
         orderProcessors.stream()
                 .filter(processor -> processor.supports(OrderType.valueOf(orderRequest.getOrderType())))
                 .findFirst()
