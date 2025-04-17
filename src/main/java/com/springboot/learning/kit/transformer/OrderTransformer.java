@@ -69,12 +69,13 @@ public class OrderTransformer {
      * @param request the list of OrderItemRequest to convert
      * @return the list of OrderItem domain objects
      */
-    public List<OrderItem> transformOrderItemToDomain(List<OrderItemRequest> request, long orderUUID) {
+    public List<OrderItem> transformOrderItemRequestToDomain(List<OrderItemRequest> request, long orderUUID) {
         return request.stream()
                 .map(itemRequest -> OrderItem.builder()
                         .orderId(orderUUID)
                         .productId(itemRequest.getProductId())
                         .quantity(itemRequest.getQuantity())
+                        .status(ItemStatus.PROCESSING.name())
                         .pricePerUnit(itemRequest.getPricePerUnit())
                         .build())
                 .toList();

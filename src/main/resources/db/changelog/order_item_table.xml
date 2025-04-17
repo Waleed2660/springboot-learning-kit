@@ -19,6 +19,9 @@
             <column name="quantity" type="INT">
                 <constraints nullable="false"/>
             </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
             <column name="price_per_unit" type="DECIMAL(19,4)">
                 <constraints nullable="false"/>
             </column>

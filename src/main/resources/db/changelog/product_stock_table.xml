@@ -31,4 +31,52 @@
         </createTable>
     </changeSet>
 
+    <!-- Adds some dummy data to the table   -->
+    <changeSet id="stock_2" author="waleed">
+        <insert tableName="product_stock">
+            <column name="product_id" valueNumeric="1001"/>
+            <column name="product_name" value="Iphone 16 Pro"/>
+            <column name="warehouse" value="CENTRAL"/>
+            <column name="available_qty" valueNumeric="150"/>
+            <column name="added_date" valueDate="2023-01-15T10:00:00"/>
+            <column name="last_modified_date" valueDate="2023-01-15T10:00:00"/>
+        </insert>
+
+        <insert tableName="product_stock">
+            <column name="product_id" valueNumeric="1002"/>
+            <column name="product_name" value="M4 MacBook Pro 16 inch"/>
+            <column name="warehouse" value="NORTH"/>
+            <column name="available_qty" valueNumeric="75"/>
+            <column name="added_date" valueDate="2023-01-20T11:30:00"/>
+            <column name="last_modified_date" valueDate="2023-01-20T11:30:00"/>
+        </insert>
+
+        <insert tableName="product_stock">
+            <column name="product_id" valueNumeric="1003"/>
+            <column name="product_name" value="Wireless Earbuds"/>
+            <column name="warehouse" value="EAST"/>
+            <column name="available_qty" valueNumeric="200"/>
+            <column name="added_date" valueDate="2023-02-05T09:15:00"/>
+            <column name="last_modified_date" valueDate="2023-02-05T09:15:00"/>
+        </insert>
+
+        <insert tableName="product_stock">
+            <column name="product_id" valueNumeric="1004"/>
+            <column name="product_name" value="Smart Watch G3"/>
+            <column name="warehouse" value="WEST"/>
+            <column name="available_qty" valueNumeric="100"/>
+            <column name="added_date" valueDate="2023-02-10T14:45:00"/>
+            <column name="last_modified_date" valueDate="2023-02-10T14:45:00"/>
+        </insert>
+
+        <insert tableName="product_stock">
+            <column name="product_id" valueNumeric="1005"/>
+            <column name="product_name" value="Bluetooth Speaker"/>
+            <column name="warehouse" value="SOUTH"/>
+            <column name="available_qty" valueNumeric="120"/>
+            <column name="added_date" valueDate="2023-02-15T16:20:00"/>
+            <column name="last_modified_date" valueDate="2023-02-15T16:20:00"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
