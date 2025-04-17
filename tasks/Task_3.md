@@ -37,7 +37,7 @@ application level. Let's investigate the code to find out what's going on.
 Let's dive into the Database to understand what's happening there. Before that, I'll share the current database 
 diagram with you to help you understand the relationships between the tables.
 
-![img.png](task3_database_diagram.png)
+![img.png](resources/task3_database_diagram.png)
 
 
 Now Grab the `UUID` you used in the payload while hitting the `order/submit` endpoint. 

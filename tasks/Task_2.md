@@ -210,8 +210,21 @@ I'll attach screenshots of some failures but you should try to test all scenario
 
 ## **Order Status**
 
-The order status is another critical part of the order placement flow. It allows the system to 
-track the progress of an order & provide latest order status to the client. We'll also implement 
+The order status is another critical part of the order processing application. It allows the system to 
+track the progress of an order & provide latest order status back to the client. We'll also implement 
 a new API to retrieve the order status from the Database.
 
 **Requirements:**
+- Implement a new API to retrieve the order status.
+- The API should accept the `UUID` as a path variable.
+- The API should return the latest order status from the database.
+- The API should return a 404 status code if the order is not found in the database.
+- The API should return a 500 status code if there is any other error.
+
+#### **Implementation:**
+
+- Have a look at `order/submit` API and see how it's implemented.
+- Follow that pattern to implement the new API in the `OrderController.java` class.
+- Create a new class in service package called `OrderStatusService.java`.
+- Now inject the new class into OrderController and implement the method to retrieve the order status.
+- 
