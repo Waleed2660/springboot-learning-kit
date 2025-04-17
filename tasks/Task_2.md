@@ -1,12 +1,55 @@
 # Task 2 ~ Kicking off development
 
 In this task, we're going to focus on Order Placement flow. We'll review the API that's already been implemented to
-place orders but it's not production ready yet. In this task you'll:
+place orders, but it's not production ready yet. In this task you'll:
 
-- ✅Implement a news validator for UUID field & Customer Details.
-- ✅Update the controller to return 400 status code for invalid payload.
-- X Implement a new API to retrieve Order Status.
+- Implement a news validator for UUID field & Customer Details.
+- Update the controller to return 400 status code for invalid payload.
+- Implement a new API to retrieve Order Status & return correct responses.
+- Understand importance of custom exceptions in production environment.
 
+---
+
+### **Please Read this Section before moving on:**
+
+**Design Decisions**
+
+In this project, I’ve adopted a clean, extensible design by using interfaces and abstract classes to 
+handle common and variable order processing logic. The `AbstractOrderProcessor` class defines the shared 
+workflow such as saving orders, while leaving methods like `processOrder()` abstract for subclasses to 
+implement their specific business logic. We'll have multiple processors for different order types & all of 
+them will extend the `AbstractOrderProcessor` class & build upon the shared logic.
+
+This approach aligns with SOLID principles and the Template Method design pattern, making the codebase more 
+maintainable, testable, and scalable. By enforcing a consistent structure for all processors and centralizing 
+shared behavior, this design ensures that adding new types of processors is straightforward and doesn’t disrupt 
+existing functionality—an essential trait in enterprise-level applications.
+
+
+
+**Keeping Database Relationships simple**
+
+I’ve intentionally avoided using `@OneToMany`, `@ManyToOne`, and `cascading` relationships to keep 
+the data access logic explicit and beginner-friendly. While JPA provides powerful tools for managing entity 
+relationships automatically, they often introduce hidden behaviors that can be confusing for those new to Spring 
+Boot and JPA. By handling relationships manually—through IDs and separate queries or service-level composition, 
+I maintain full control over data loading, updates, and deletions. This approach avoids potential pitfalls like 
+unintended cascading operations, lazy loading issues, or bidirectional serialization problems, making the 
+application easier to understand, debug, and extend as developers learn the underlying concepts.
+
+_You're welcome to update/remove the existing logic to your liking_
+
+
+**Using Lombok**
+
+For those who are not familiar with Lombok, it's a Java library that helps to reduce boilerplate code. It offers
+some incredible useful annotations such as `@Data`, `@RequiredArgsConstructor`, `@Builder`, `@Slf4j`, etc. You'll
+see that I'll be extensively using these annotations throughout the project. Some of my favorite ones are:
+
+- `@Data`: This annotation generates getters, setters, equals, hashCode, and toString methods for the class.
+- `@Builder`: This annotation allows you to create objects using the builder pattern. It makes the code cleaner and easier to read.
+- `@RequiredArgsConstructor`: This annotation generates a constructor with required arguments (final fields) at compile time.
+- `@Slf4j`: This annotation generates a logger for the class. You can use `log.info()`, `log.error()`, etc. to log messages.
 
 ---
 
@@ -15,17 +58,19 @@ place orders but it's not production ready yet. In this task you'll:
 **Background**
 
 We'll assume that an upstream service (This can be frontend component or another microservice) sends us new order
-requests which our application need to handle gracefully. 
+requests which our application need to handle gracefully. On a very high level, the order placement flow looks like this:
 
 ![img.png](resources/task2_arch_diagram.png)
 
-The order placement flow is a critical part of any business’s operations, as it directly impacts customer satisfaction,
+Order placement flow is a critical part of any business’s operations, as it directly impacts customer satisfaction,
 inventory management, and revenue recognition. This process typically begins with receiving an order request, 
 which may originate from various channels such as an online store, a mobile app, or an internal sales system. 
 Once the order is received, the system performs a series of validations to ensure data accuracy and completeness — 
 including checking product availability, verifying pricing, and confirming customer details.
 
 ---
+
+## **Okay time to code**
 
 ### **OrderController**
 
@@ -215,19 +260,148 @@ that it uses a transformer to convert `OrderItemRequest` (DTO) into `OrderItem` 
 we're setting the `status` field to `PROCESSING` by default. We'll use this field to keep track of
 order status and update the status as we receive updates from upstream services.
 
-For now, you'll implement a new API to retrieve the order status from the Database.
+For now, you'll implement a new API to retrieve the order status from the Database. Treat this task as an actual 
+production task.
 
 **Requirements:**
 - Implement a new API to retrieve the order status.
-- The API should accept the `UUID` as a path variable.
-- The API should return the latest order status from the database.
+- The API should accept the `UUID` as a path variable using `@PathVariable` annotation.
+- The API should return the [OrderStatusResponse](../src/main/java/com/springboot/learning/kit/dto/response/OrderStatusResponse.java) object from the database.
 - The API should return a 404 status code if the order is not found in the database.
 - The API should return a 500 status code if there is any other error.
 
-#### **Implementation:**
+#### **Implementation Tips:**
 
 - Have a look at `order/submit` API and see how it's implemented.
 - Follow that pattern to implement the new API in the `OrderController.java` class.
 - Create a new class in service package called `OrderStatusService.java`.
-- Now inject the new class into OrderController and implement the method to retrieve the order status.
-- 
+- Inject `OrderStatusRepository` into the new service class.
+- The `OrderStatusRepository` should use `@Query` annotation, provide a custom SQL query to retrieve the order status.
+- Now inject the new service class into `OrderController` to pull the status from service layer.
+
+```mermaid
+flowchart TD
+    A[OrderController] -->|Injects| B[OrderStatusService]
+    B -->|Injects| C[OrderRepository]
+    B -->|Injects| D[OrderItemRepository]
+    C -->|Fetches order| E[(Database)]
+    D -->|Fetches order items| E
+    B -->|Builds & returns response| A
+```
+
+_*** 🚧 Try implementing this yourself first before looking at the solution below ***_
+
+### **Solution**
+
+Here's how I handled this task. Firstly, I created a new class `OrderStatusService` in the service package.
+This class injected `OrderRepository` & `OrderItemRepository` so that I can extract the `OrderType` field
+from `Order` table & `OrderItem` records will be pulled from `OrderItem` table.
+
+**OrderController**
+
+My API returns different response codes based on the scenario. You can see that I'm using a custom ⚡️ exception
+`OrderNotFoundException` to handle the case when order is not found in the database. It's important to handle 
+such cases gracefully and return meaningful error messages to the client.
+
+_Also, you can see that I'm using `log.error()` from Lombok's `@Slf4j` annotation, inside `catch{}` blocks
+to print error messages in the console. These logs can be extremely valuable when working with incidents
+on a production environment_
+
+![img.png](resources/task2_showing_lombok.png)
+
+Here's my new method:
+
+![img.png](resources/task2_status_api.png)
+
+**OrderStatusService**
+
+This class contains the business logic to fetch the necessary data from the database & 
+builds the response object for our API.
+
+_Note that I'm throwing a custom exception here which I can gracefully catch upstream to
+return an accurate response to client_
+
+![img.png](resources/task2_orderstatusservice.png)
+
+
+**OrderItemRepository**
+
+You can see that I had to create a new method in this repository which follows Spring Data JPA's naming 
+convention, where it will automatically create a query to find all OrderItem entities where the 
+orderId field matches the given parameter. This is a powerful feature of Spring Data JPA that allows you to 
+create queries without writing any SQL code.
+
+![img_1.png](resources/task2_orderItem_repository.png)
+
+Under the hood, Spring Data JPA will generate a SQL query similar to this shown below & will collect
+the results in a list of `OrderItem` objects.
+
+```sql
+SELECT * FROM order_item WHERE order_id = :orderId;
+```
+
+---
+
+### **Testing the new API**
+
+Place a new test order using the `/submit` API, add the new API to Bruno collection & hit the new API with 
+the `UUID` of the order you just placed. 
+
+For success scenario, your application should return a `200` response code with following
+payload:
+
+```json
+{
+  "orderId": 1234567,
+  "orderType": "ONLINE",
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2,
+      "status": "PROCESSING"
+    },
+    {
+      "productId": 2,
+      "quantity": 1,
+      "status": "PROCESSING"
+    }
+  ]
+}
+```
+
+If the order doesn't exist in your database, you should get a `404` response code with following payload:
+
+```json
+{
+  "message": "Order not found with UUID: 123456788"
+}
+```
+
+If the order doesn't have any items in your database, you should get a `404` response code with following payload:
+
+```json
+{
+  "message": "No order items found for order with UUID: 123456788"
+}
+```
+
+If there was any other issue with the database or the application, you should get a `500` response code with following payload:
+```json
+{
+  "message": "Unable to retrieve order status"
+}
+```
+
+---
+
+### **Task Summary**
+
+This task shed some light onto the order placement flow within the application. We started by implementing new validator
+for incoming order request & then we implemented a new API to retrieve the order status. 
+
+We also explored the importance of using custom ⚡️exceptions and how beneficial they can be in a production 
+environment for clearer error handling, more specific debugging, and consistent API responses.
+
+By completing this task, you should also have recognized how we’re keeping the controller, service, and 
+repository logic cleanly separated in their own layers. This separation helps ensure the codebase remains clean, 
+readable, and maintainable as the project grows.
