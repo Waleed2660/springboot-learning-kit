@@ -125,6 +125,7 @@ You should be able to view a queue & a dlq on the UI. You should see 1 active co
 - **Pretty JSON Log**: This plugin formats JSON logs in a readable format when running your application in IntelliJ.
 - **Rainbow Brackets**: This plugin adds rainbow colors to brackets, making it easier to read nested code.
 - **SonarQube For IDE**: This plugin provides real-time feedback on code quality and security issues as you write code.
+- **Mermaid**: This plugin allows you to create diagrams and flowcharts using a simple markdown-like syntax. You can use it to visualize your database schema or any other diagrams.
 
 
 ### **IntelliJ Shortcuts**

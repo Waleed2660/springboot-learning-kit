@@ -5,7 +5,6 @@ place orders but it's not production ready yet. In this task you'll:
 
 - ✅Implement a news validator for UUID field & Customer Details.
 - ✅Update the controller to return 400 status code for invalid payload.
-- X Update Order Processor to save Order Status in the Database.
 - X Implement a new API to retrieve Order Status.
 
 
@@ -210,9 +209,13 @@ I'll attach screenshots of some failures but you should try to test all scenario
 
 ## **Order Status**
 
-The order status is another critical part of the order processing application. It allows the system to 
-track the progress of an order & provide latest order status back to the client. We'll also implement 
-a new API to retrieve the order status from the Database.
+The order status is another critical part of any order processing application. If you inspect the
+[OrderItemService](../src/main/java/com/springboot/learning/kit/service/OrderItemService.java) class, you'll see
+that it uses a transformer to convert `OrderItemRequest` (DTO) into `OrderItem` (Entity) object. While doing so,
+we're setting the `status` field to `PROCESSING` by default. We'll use this field to keep track of
+order status and update the status as we receive updates from upstream services.
+
+For now, you'll implement a new API to retrieve the order status from the Database.
 
 **Requirements:**
 - Implement a new API to retrieve the order status.
