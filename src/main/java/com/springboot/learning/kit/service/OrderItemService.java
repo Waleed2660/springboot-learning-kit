@@ -18,7 +18,9 @@ public class OrderItemService {
 
     public void saveOrderItems(List<OrderItemRequest> orderItem, long orderUUID) {
         List<OrderItem> orderItemEntities = orderTransformer.transformOrderItemRequestToDomain(orderItem, orderUUID);
-        orderItemRepository.saveAll(orderItemEntities);
+        for (OrderItem orderItemEntity : orderItemEntities) {
+            orderItemRepository.save(orderItemEntity);
+        }
     }
 
 }
