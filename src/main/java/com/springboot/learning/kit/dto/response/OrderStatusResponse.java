@@ -14,8 +14,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderStatusResponse {
     private Long orderId;
-    private String orderStatus;
     private String orderType;
-    private LocalDateTime orderCreated;
     private List<OrderItemStatusResponse> items;
 }
