@@ -1,0 +1,19 @@
+name: Branch Protection Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          if [[ "${{ github.head_ref }}" == "solutions" ]]; then
+            echo "::error::PR for solutions branch are not allowed to be merged."
+            exit 1
+          else
+            echo "Source branch is not solutions, proceeding normally."
+          fi
