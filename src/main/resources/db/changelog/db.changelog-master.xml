@@ -10,5 +10,4 @@
     <include file="order_table.xml" relativeToChangelogFile="true"/>
     <include file="order_item_table.xml" relativeToChangelogFile="true"/>
     <include file="product_stock_table.xml" relativeToChangelogFile="true"/>
-    <include file="order_status_table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

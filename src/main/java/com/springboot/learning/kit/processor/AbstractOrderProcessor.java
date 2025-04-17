@@ -39,8 +39,6 @@ public abstract class AbstractOrderProcessor {
      */
     @Transactional
     public void saveOrder(OrderRequest orderRequest) {
-        log.error("Abstract Order Processor saving order: {}", orderRequest);
-
         // Save customer details and address
         long customerId = customerService.saveCustomerDetails(orderRequest.getCustomerDetails());
         long addressId = addressService.saveCustomerAddress(orderRequest.getCustomerAddress());

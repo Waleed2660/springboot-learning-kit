@@ -1,10 +1,7 @@
 package com.springboot.learning.kit.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -27,6 +24,9 @@ public class OrderItem {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "price_per_unit")
     private BigDecimal pricePerUnit;
