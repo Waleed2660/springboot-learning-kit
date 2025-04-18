@@ -1,6 +1,28 @@
 # Spring Boot Learning Kit
 
-A Spring Boot application designed for learning and experimentation with modern technologies like ActiveMQ, RabbitMQ & Postgres.
+## **Table of Contents**
+- [Introduction](#introduction)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Pre-requisites](#pre-requisites)
+  - [Docker](#docker)
+  - [DBeaver](#dbeaver)
+- [API Collection](#api-collection)
+- [License](#license)
+
+---
+
+## **Introduction**
+
+This project serves as a learning kit for Spring Boot, focusing on the integration of various technologies such as 
+ActiveMQ, RabbitMQ, and PostgreSQL. It provides a hands-on experience for developers looking to enhance their skills 
+in building modern applications. The aim of this project is to:
+
+- Provide a practical understanding of Spring Boot and its ecosystem.
+- Tackle real-world challenges in application development.
+- Explore the integration of messaging brokers like ActiveMQ and RabbitMQ.
+- Follow best practices in software development.
+- Encourage collaboration and knowledge sharing among developers.
 
 ---
 
@@ -30,40 +52,11 @@ A Spring Boot application designed for learning and experimentation with modern 
 
 ---
 
-## **ActiveMQ**
-ActiveMQ is used as the message broker in this project.
+## **Pre-requisites**
 
-### **Accessing ActiveMQ**
-- **Broker Port**: `61616`
-- **Web Console Port**: `8161`
-- **Web Console URL**: [http://localhost:8161](http://localhost:8161)
-- **Default Credentials**:
-    - Username: `admin`
-    - Password: `admin`
+### **Docker**
 
----
-
-## **RabbitMQ**
-RabbitMQ is an alternative message broker that can be used in this project.
-### **Accessing RabbitMQ**
-- **Broker Port**: `5672`
-- **Web Console Port**: `15672`
-- **Web Console URL**: [http://localhost:15672](http://localhost:15672)
-- - **Default Credentials**:
-  - Username: `user`
-  - Password: `password`
-
----
-
-## **PostgreSQL**
-PostgreSQL is used as the relational database in this project.
-
-### **Database Configuration**
-- DB_NAME: `Order_Service`
-- DB_HOST: `localhost`
-- DB_PORT: `5432`
-- DB_USER: `user`
-- DB_PASSWORD: `password`
+Install Docker Desktop from [Docker's official website](https://www.docker.com/products/docker-desktop).
 
 ### **DBeaver**
 
@@ -80,23 +73,6 @@ popular choice for developers and database administrators.
 
 ---
 
-## **Local Development**
-This project uses Docker Compose to simplify the setup of dependent services.
-
-### **Starting All Services**
-To start both ActiveMQ and MSSQL, run:
-```bash
-   docker-compose up -d
-```
-
-### **Stopping All Services**
-To stop all running services, use:
-```bash
-   docker-compose down
-```
-
----
-
 ## **API Collection**
 This project includes a **Bruno Collection** that contains all the APIs for easy testing and exploration.
 
@@ -110,17 +86,13 @@ This project includes a **Bruno Collection** that contains all the APIs for easy
 3. Use the pre-configured endpoints to test the APIs.
 
 ### **Available Endpoints**
-- **Health Check**: [http://localhost:8080/management/healthcheck](http://localhost:8080/management/healthcheck)  
-  Response: `OK`
+- **Health Check**: [http://localhost:8080/OrderService/management/healthcheck](http://localhost:8080/OrderService/management/healthcheck)  
+  Response: 
+  `ActiveMQ: OK
+  RabbitMQ: OK
+  Database: OK`
 
-Make sure the application and required services (ActiveMQ and MSSQL) are running before testing the APIs.
-
----
-
-## **Health Check**
-The application provides a health check endpoint to verify its status:
-- **URL**: [http://localhost:8080/management/healthcheck](http://localhost:8080/management/healthcheck)
-- **Response**: `OK`
+_Make sure the application and required services (ActiveMQ and MSSQL) are running before testing the APIs._
 
 ---
 
