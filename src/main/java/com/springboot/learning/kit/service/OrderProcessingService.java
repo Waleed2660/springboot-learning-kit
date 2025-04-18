@@ -6,6 +6,7 @@ import com.springboot.learning.kit.processor.AbstractOrderProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class OrderProcessingService {
     private final Set<AbstractOrderProcessor> orderProcessors;
     private final OrderValidationService orderValidationService;
 
+    @Transactional
     public void processNewOrder(OrderRequest orderRequest) {
 
         // Perform validation on the incoming order request

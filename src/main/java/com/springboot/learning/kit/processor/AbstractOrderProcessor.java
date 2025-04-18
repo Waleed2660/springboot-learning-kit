@@ -6,11 +6,12 @@ import com.springboot.learning.kit.service.AddressService;
 import com.springboot.learning.kit.service.CustomerService;
 import com.springboot.learning.kit.service.OrderItemService;
 import com.springboot.learning.kit.service.OrderService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public abstract class AbstractOrderProcessor {
 
@@ -37,7 +38,6 @@ public abstract class AbstractOrderProcessor {
      * @Transactional ensures that the method is executed within a transaction.
      * @param orderRequest the order request object
      */
-    @Transactional
     public void saveOrder(OrderRequest orderRequest) {
         // Save customer details and address
         long customerId = customerService.saveCustomerDetails(orderRequest.getCustomerDetails());
