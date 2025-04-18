@@ -1,0 +1,11 @@
+meta {
+  name: Get Order Status
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/OrderService/order/status/1234567
+  body: none
+  auth: inherit
+}
