@@ -41,6 +41,8 @@ public class OnlineOrderProcessor extends AbstractOrderProcessor {
 
         // Call the saveOrder method from the parent class to save the order
         super.saveOrder(orderRequest);
+
+        orderService.publishOrderPlacedEvent(orderRequest);
     }
 
 }

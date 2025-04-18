@@ -1,8 +1,11 @@
 package com.springboot.learning.kit.service;
 
 import com.springboot.learning.kit.domain.Order;
+import com.springboot.learning.kit.event.OrderPlacedEvent;
 import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.exception.DuplicateOrderException;
+import com.springboot.learning.kit.producer.OrderEventProducer;
+import com.springboot.learning.kit.transformer.OrderEventTransformer;
 import com.springboot.learning.kit.transformer.OrderTransformer;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,8 @@ public class OrderService {
 
     private final OrderTransformer orderTransformer;
     private final EntityManager entityManager;
+    private final OrderEventProducer orderEventProducer;
+    private final OrderEventTransformer orderEventTransformer;
 
     public void saveNewOrder(OrderRequest orderRequest, long customerId, long addressId) {
         log.info("Saving new order: {}", orderRequest);
@@ -30,5 +35,13 @@ public class OrderService {
             log.error("Error saving order: ", e);
             throw new DuplicateOrderException("Order with UUID " + orderRequest.getUUID() + " already exists.");
         }
+    }
+
+    public void publishOrderPlacedEvent(OrderRequest orderRequest) {
+        log.info("Publishing order placed event for order: {}", orderRequest.getUUID());
+
+        OrderPlacedEvent orderPlacedEvent = orderEventTransformer.transformToOrderPlacedEvent(orderRequest);
+
+        orderEventProducer.sendNewOrderNotificationToVirtualTopic(orderPlacedEvent);
     }
 }
