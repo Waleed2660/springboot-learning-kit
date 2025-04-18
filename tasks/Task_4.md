@@ -231,7 +231,7 @@ successfully consumed by our application.
 
 Open your application logs in IntelliJ and you should see the following logs:
 
-```json
+```text
 2025-04-18T19:59:21.240+01:00 ERROR 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.kit.consumer.NewOrderConsumer      : Received new ActiveMQ order message
 Validating UUID: 12345
 2025-04-18T19:59:21.249+01:00  INFO 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.k.processor.OnlineOrderProcessor   : Processing online order: 12345
@@ -291,7 +291,7 @@ We should see following behavior in the application:
 
 Once you publish the same paylaod that you used before, you should see following logs:
 
-```json
+```text
 2025-04-18T20:17:14.680+01:00 ERROR 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.kit.consumer.NewOrderConsumer      : Received new ActiveMQ order message
 Validating UUID: 12345
 2025-04-18T20:17:14.715+01:00  INFO 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.k.processor.OnlineOrderProcessor   : Processing online order: 12345
@@ -318,7 +318,7 @@ org.hibernate.exception.ConstraintViolationException: could not execute statemen
 
 After this, you will see same logs once more as the application is retrying the message.
 
-```json
+```text
 2025-04-18T20:17:15.844+01:00 ERROR 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.kit.consumer.NewOrderConsumer      : Received new ActiveMQ order message
 Validating UUID: 12345
 2025-04-18T20:17:15.848+01:00  INFO 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.k.processor.OnlineOrderProcessor   : Processing online order: 12345
