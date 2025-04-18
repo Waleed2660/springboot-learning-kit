@@ -147,7 +147,22 @@ is a custom exception that extends the `RuntimeException` class. All custom exce
 
 Following diagram demonstrates the flow of how the custom exception is thrown by our Validator and is caught in the controller.
 
-<img src="resources/custom_exception_explanation.svg" alt="Screenshot" width="280"/>
+```mermaid
+flowchart TD
+    A(["Validator:<br>Throws OrderValidationException"]) -- Exception Propagates<br>Upwards --> C(["OrderProcessingService"])
+    C -- Exception Propagates<br>Upwards --> E{"OrderController:<br>Exception Handler"}
+    E -- Catches OrderValidationException --> F(["Returns 400 Error Code"])
+    E -- Unhandled/Other Exception --> G(["Returns 500 Error Code"])
+    style A stroke:#AA00FF
+    style C stroke:#AA00FF
+    style E stroke:#FFD600
+    style F stroke:#AA00FF
+    style G stroke:#FF6D00
+    linkStyle 0 stroke:#AA00FF
+    linkStyle 1 stroke:#AA00FF,fill:none
+    linkStyle 2 stroke:#AA00FF,fill:none
+    linkStyle 3 stroke:#FF6D00,fill:none
+```
 
 
 Once you've done that, your `submitOrder` method should look like this:
@@ -160,7 +175,7 @@ Let's run the application & hit the `/submit` API with a negative UUID.
 
 ![img.png](resources/task2_order_400.png)
 
-✅You can see that we got a 400 Response code with the error message we provided in the exception.
+You can see that we got a 400 Response code with the error message we provided in the exception.
 **You should now test this API by placing an order without UUID and see if you get expect error response.** 
 
 ---
@@ -257,7 +272,7 @@ I'll attach screenshots of some failures but you should try to test all scenario
 The order status is another critical part of any order processing application. If you inspect the
 [OrderItemService](../src/main/java/com/springboot/learning/kit/service/OrderItemService.java) class, you'll see
 that it uses a transformer to convert `OrderItemRequest` (DTO) into `OrderItem` (Entity) object. While doing so,
-we're setting the `status` field to `PROCESSING` by default. We'll use this field to keep track of
+we're setting the `status` field to `PROCESSING` by default for all newly placed orders. We'll use this field to keep track of
 order status and update the status as we receive updates from upstream services.
 
 For now, you'll implement a new API to retrieve the order status from the Database. Treat this task as an actual 

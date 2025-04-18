@@ -179,8 +179,8 @@ We should only catch the exception that is thrown when a duplicate order is plac
 exception to catch? We can figure this out by printing the complete stack trace of the exception.
 
 Add `log.error("Error while placing order", e)` in the catch block of `order/submit` api. This will print the complete stack 
-trace of the exception. You should see `org.hibernate.exception.ConstraintViolationException` on top of the stack trace. This is the exception 
-that is thrown when a duplicate order is placed.
+trace of the exception. You should see `org.hibernate.exception.ConstraintViolationException` on top of the stack trace. 
+This is the exception that is thrown when a duplicate order is placed.
 
 So now your code should look like this:
 
