@@ -15,6 +15,21 @@ A Spring Boot application designed for learning and experimentation with modern 
 
 ---
 
+## Getting Started
+
+1. **Fork this repository** to your own GitHub account
+2. 📥 Clone your fork:
+ ```bash
+   git clone https://github.com/YOUR_USERNAME/springboot-learning-kit.git
+```
+3. Create a new branch:
+```bash
+   git checkout -b your-feature-branch
+```
+4. Navigate to [Tasks](tasks) folder and kick off the work.
+
+---
+
 ## **ActiveMQ**
 ActiveMQ is used as the message broker in this project.
 
