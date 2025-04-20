@@ -78,12 +78,60 @@ You should be able to view the tables under the `public` schema.
 
 ### Time to run the application
 Now you can now run the application. This can be done in different ways.
-1. **Using IntelliJ Idea**:
+
+**Using IntelliJ Idea**:
    - Navigate to the [SpringBootLearningKitApplication](../src/main/java/com/springboot/learning/kit/SpringBootLearningKitApplication.java) class.
    - Right-click on the class and select `Run 'SpringBootLearningKitApplication.main()'`.
-2. **Using Command Line**:
+
+**Using Command Line**:
    - Navigate to the root directory of the project.
    - Run the following command: `./gradlew bootRun`
+
+---
+
+### SpringBoot Property Files 
+Spring Boot uses `application.properties` or `application.yml` files to externalize configuration, making it easy to 
+manage environment-specific settings like database URLs, ports, and feature toggles. This approach promotes clean, 
+flexible practices by separating configuration from business logic. This makes configuration externalized, enabling easy 
+changes across environments (dev, test, prod) without modifying code
+
+We've got [application.properties](../src/main/resources/application.properties) which is always loaded by the application,
+and it contains properties that are common across all environments. This separation allows you to keep environment-specific
+settings isolated while keeping shared config clean and centralized.
+
+Then we've got [application-local.properties](../src/main/resources/application-local.properties) file which is used to store
+property values for local environment. You'll see that all URLs are pointing to `localhost` etc.
+
+Then we've [application-prod.properties](../src/main/resources/application-prod.properties) file which is used to store 
+property values for production environment. You'll see that all URLs are different from local environment.
+
+While running the app, we can simply pass environment variable to SpringBoot so that I can use the correct property file
+for the environment. 
+
+For local development:
+```bash
+  ./gradlew bootRun -Dspring.profiles.active=local
+```
+For production: 
+```bash
+  ./gradlew bootRun -Dspring.profiles.active=prod
+```
+
+You can see the selected profile in the second log when springboot application boots up:
+```text
+[SpringBootLearningKit] [           main] c.s.l.k.SpringBootLearningKitApplication : Starting SpringBootLearningKitApplication using Java 17.0.13 with PID 61942
+[SpringBootLearningKit] [           main] c.s.l.k.SpringBootLearningKitApplication : The following 1 profile is active: "local"
+[SpringBootLearningKit] [           main] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file springboot-learning-kit/compose.yaml
+[SpringBootLearningKit] [           main] .s.b.d.c.l.DockerComposeLifecycleManager : There are already Docker Compose services running, skipping startup
+```
+
+**⚠️ Note:**
+In this project, `local` profile has been set as default in `applicaton.properties`. It means, if you run the application 
+without specifying any profile, it'll fallback to `local` profile always.
+
+![img.png](resources/task1_showing_default_profile.png)
+
+---
 
 ### **Verify the Application is Healthy**
 
