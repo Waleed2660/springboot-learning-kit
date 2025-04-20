@@ -21,13 +21,16 @@ is stored in the queue until a consumer is available to process it.
 
 ```mermaid
 flowchart LR
-    A["Service A"] --> |sends message to queue| C[" Destination Queue"]
+    A["Service A"] --> |sends message to queue| B["Queue A"]
+    D["Service B"] --> |sends message to queue| E["Queue B"]
     
     subgraph "ActiveMQ Broker"
-        C
+        B
+        E
     end
     
     style A stroke:#2962FF
+    style D stroke:#9935FF
 ```
 
 **Consumer**
@@ -37,10 +40,14 @@ with each consumer processing messages from the different queues.
 
 ```mermaid
 flowchart LR
-    A["Destination Queue"]
-    A -- Consumes available <br/> messages --> B["Service B"]
+    A["Queue A"]
+    A --> |Consumes messages| B["Service A"]
+    C["Queue B"]
+    C --> |Consumes messages| D["Service B"]
+    
     subgraph "ActiveMQ Broker"
         A
+        C
     end
     style B stroke:#00C853
 ```
