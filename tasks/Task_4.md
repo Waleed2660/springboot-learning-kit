@@ -21,10 +21,13 @@ is stored in the queue until a consumer is available to process it.
 
 ```mermaid
 flowchart LR
-    A["Service A"] -- Sends Message to <br/> a specific queue --> B["ActiveMQ Broker<br>---<br>Receives message nand routes<br>message to consumer"]
-    B --> C[" Destination Queue"]
+    A["Service A"] --> |sends message to queue| C[" Destination Queue"]
+    
+    subgraph "ActiveMQ Broker"
+        C
+    end
+    
     style A stroke:#2962FF
-    style B stroke:#D50000
 ```
 
 **Consumer**
@@ -34,10 +37,12 @@ with each consumer processing messages from the different queues.
 
 ```mermaid
 flowchart LR
-    B["ActiveMQ Broker<br>---<br>Serves the message to consumer"] --> C["Destination Queue"]
-    C -- Consumes available <br/> messages --> D["Service B"]
-    style B stroke:#D50000
-    style D stroke:#00C853
+    A["Destination Queue"]
+    A -- Consumes available <br/> messages --> B["Service B"]
+    subgraph "ActiveMQ Broker"
+        A
+    end
+    style B stroke:#00C853
 ```
 
 
@@ -49,8 +54,12 @@ should be listening to this queue. This is a one-to-one communication model.
 
 ```mermaid
 flowchart LR
-    A["Upstream Service"] -- Sends Message --> B["ActiveMQ Broker<br>---<br>Receives and routes<br>message to queue"]
+    A["Upstream Service"] -- Sends Message --> B["order.placement.queue"]
     B -- Consumes Message --> C["Order Service"]
+    
+    subgraph "ActiveMQ Broker"
+    B
+    end
     
     style A stroke:#2962FF
     style B stroke:#D50000
@@ -63,23 +72,29 @@ Topics are used for publish-subscribe communication. In this model, a message is
 In this project, our `Order Service` application will produce events to a Topic which will have multiple consumers downstream.
 
 _**Note:** that a Virtual Topic in ActiveMQ requires a prefix in order to work: `VirtualTopic.<TopicName>`_
-_& in order to subscribe to a VT, you need to create a queue in this format `Consumer.<serviceName>.VirtualTopic.<TopicName>`_
+_& in order to subscribe to a VT, you need to create a queue in this format `Consumer.<serviceName>.VirtualTopic.<TopicName>`.
+Then your application will consume messages from that specific queue._
 
 ```mermaid
 flowchart LR
-    A["Order Service"] -- Sends Message --> B["ActiveMQ Broker<br>---<br>Receives and routes<br>message to Virtual Topic"]
-    B -- Consumes Message --> C["Finance Service"]
-    B -- Consumes Message --> D["Inventory Service"]
-    B -- Consumes Message --> E["Shipping Service"]
-    B -- Consumes Message --> F["Shipping Service"]
-    B -- Consumes Message --> G["Email Service"]
-
+    A["Order Service"] -- Sends Message --> B["VirtualTopic.Orders"]
+    B --> |copy of message| H["Consumer.finance.VirtualTopic.Orders"] --> |consumes| C["Finance Service"]
+    B --> |copy of message| I["Consumer.inventory.VirtualTopic.Orders"] --> |consumes| D["Inventory Service"]
+    B --> |copy of message| J["Consumer.shipping.VirtualTopic.Orders"] --> |consumes| E["Shipping Service"]
+    B --> |copy of message| L["Consumer.email.VirtualTopic.Orders"] --> |consumes| G["Email Service"]
+    
+    subgraph "ActiveMQ Broker"
+    B
+    H
+    I
+    J
+    L
+    end
     style A stroke:#00C853
     style B stroke:#D50000
     style C stroke:#2962FF
     style D stroke:#AA00FF
     style E stroke:#E1BEE7
-    style F stroke:#FFD600
     style G stroke:#FFE0B2
 ```
 
@@ -91,14 +106,19 @@ application is consuming from this queue. The messages in this queue can be moni
 
 ```mermaid
 flowchart LR
-    A["ActiveMQ Broker<br>---<br>Receives and routes<br>message to queue"] --> B["Destination Queue"]
-    B -- Consumes Message --> C["Order Service <br/> --- <br/> ❌ Throws Exception"]
-    C -- Sends Message to DLQ --> D["Dead Letter Queue"]
+    A[Producer] -->|send| B[Queue]
+    B -->|consume| C[Consumer]
+
+    B -.->|failed messages| DLQ
+  
+    subgraph "ActiveMQ Broker"
+      B
+      DLQ
+    end
     
     style A stroke:#D50000
     style B stroke:#2962FF
     style C stroke:#00C853
-    style D stroke:#AA00FF
 ```
 
 ---
