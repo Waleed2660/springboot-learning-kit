@@ -41,7 +41,7 @@ dependencies {
 	def lombokVersion = '1.18.36'
 	def springRestDocsVersion = '3.0.3'
 	def testContainerVersion = '1.20.6'
-	def testContainerPostgresVersion = '1.19.0'
+	def testContainerPostgresVersion = '1.20.6'
 	def junitPlatformVersion = '1.11.4'
 	def openApiSpringDocsVersion = '2.8.6'
 
