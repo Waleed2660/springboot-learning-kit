@@ -34,7 +34,7 @@ dependencies {
 
 	def springBootVersion = '3.4.4'
 	def camelVersion = '4.4.0'
-	def postgresVersion = '42.7.2'
+	def postgresVersion = '42.7.5'
 	def liquibaseVersion = '4.29.2'
 	def picocliVersion = '4.7.5'
 	def prometheusVersion = '1.14.5'
