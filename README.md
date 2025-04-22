@@ -85,13 +85,6 @@ This project includes a **Bruno Collection** that contains all the APIs for easy
 2. Import the provided Bruno collection from [Docs Directory](docs/SpringBoot%20Learning%20Kit%20-%20APIs) into the client.
 3. Use the pre-configured endpoints to test the APIs.
 
-### **Available Endpoints**
-- **Health Check**: [http://localhost:8080/OrderService/management/healthcheck](http://localhost:8080/OrderService/management/healthcheck)  
-  Response: 
-  `ActiveMQ: OK
-  RabbitMQ: OK
-  Database: OK`
-
 _Make sure the application and required services (ActiveMQ and MSSQL) are running before testing the APIs._
 
 ---
