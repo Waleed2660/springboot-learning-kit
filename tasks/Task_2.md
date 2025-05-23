@@ -132,6 +132,9 @@ Great, you've implemented the validator but there's one issue with our `/submit`
 you'll see that it returns a INTERNAL_SERVER_ERROR (500) status upon any failure. Let's fix that so that we send back 
 BAD_REQUEST (400) status code instead if the client sends us incorrect payload.
 
+⚠️ **Disclaimer:** _For sake of this exercise, I'll be using try-catch block to handle the custom exceptions. But you can also use 
+`@ControllerAdvice` to handle exceptions globally. This is a more elegant way to handle exceptions in Spring Boot applications_
+
 **Implementation:**
 - Add a new `catch()` block after the `try{}`.
 - This catch block should catch `OrderValidationException` as the validator throws this exception.
