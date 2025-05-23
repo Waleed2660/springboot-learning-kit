@@ -233,9 +233,19 @@ flowchart LR
 4. Create a new method in OrderEventProducer class that will publish messages to RabbitMQ.
    - ![img.png](resources/task5_showingNewProducerMethod.png)
 5. Call the producer method in `OrderService::PublishOrderPlacedEvent` as we did for ActiveMQ.
-6. Verify that the event is published to RabbitMQ and the message reaches the newly created queue.
+6. Hit the Order Placement endpoint with a new order.
+7. Verify that the event is published to RabbitMQ and the message reaches the newly created queue.
    - ![img_1.png](resources/task5_verifyingThatNewEventLandedInQueue.png)
+   - This is the message that was published to the queue.
+   - ![img.png](resources/task5_showingMessageContentsForOrderEvent.png)
 
+### **Decoupling the Producer from the Consumer**
+What we have just done is a very important concept in RabbitMQ. The producer does not need to know about the queues or consumers.
+Our application is simply publishing the message to the exchange with a routing key. The exchange is responsible for 
+routing the message to the correct queues based on the routing key.
+
+You can go ahead and create as many queues as you want and bind them to same `amq.topic` exchange with `order.notification`
+routing key. One message published by the application will be distributed to all the queues that you would have set up.
 
 ## **Bonus Task**
 The RabbitMQ Routes are currently configured in not an optimal way. Imagine if we need to add few more
