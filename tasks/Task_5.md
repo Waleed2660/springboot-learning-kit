@@ -97,3 +97,112 @@ Validating UUID: 1234569999
 2025-05-23T19:34:27.647+01:00  INFO 66821 --- [SpringBootLearningKit] [ntContainer#0-1] c.s.l.k.processor.OnlineOrderProcessor   : Processing online order: 1234569999
 ```
 
+## **Fixing a bug in current RabbitMQ Configuration**
+
+Goto RabbitMQ Management Console and place a duplicate order with same UUID. You will see that
+your application threw an exception and fell into an infinite loop of retrying the duplicate order.
+
+🔧 **You are encouraged to go ahead, find the bug in RabbitMQ configuration & fix it. I'll share a walkthrough of it below.**
+
+Let's look at the RabbitMQRoutes class because that's where our binding for queue & dlq are defined. If you look closely at 
+the method that binds the order placement queue, you'll see that we are using `EXCHANGE` variable for dead letter exchange.
+This means, that when our consumer throws an exception, the message will be sent to a queue which is binded to the same exchange.
+
+![img.png](task5_showingWrongBindingofDLQEx.png)
+
+🤔 **What is an Exchange in RabbitMQ?**
+
+If you have not googled the Exchange in RabbitMQ yet, I'll give a simple explanation. An exchange in RabbitMQ is a 
+routing component that receives messages from producers and determines how to route them to queues. It uses routing 
+rules and bindings to decide where each message should go.
+
+Let's get back to the bug. I can illustrate the problem with a simple diagram. You can see that the failed message will infinitely loop between the
+application and the exchange. 
+```mermaid
+    flowchart LR
+        A[Upstream Producer] -->|Order Created| B[Order Exchange]
+        B --> C[Order Placement Queue] --> |Consumes| D["Order Service"]
+        D -.-> |sends failed message to dead letter exchange| B
+        
+        subgraph "RabbitMQ Broker"
+            B
+            C
+        end
+```
+
+### **Solution**
+
+We need to break this loop by pointing the message to correct dead letter exchange. Let's create a new variable in the
+RabbitMQRoutes class.
+
+![img_1.png](task5_adding_new_dlqEx.png)
+
+Now fix the incorrect binding in the method.
+
+![img.png](task5_fixingTheWrongDLQExBinding.png)
+
+Now if you look at the `dlqBinding` method, you will see that we are binding the DLQ to the order `exchange`. This is wrong,
+as it should be bound to the `dlqExchange` defined by the @Bean created above.
+
+![img.png](task5_showingwrongmappingforDLQ.png)
+
+Let's change that to `dlqExchange` as well. Your config should look like this now.
+
+![img.png](task5_fixingDLQBindingInConfig.png)
+
+
+### **Time to Test our Changes**
+
+1. Delete the existing `rmq.order.placement.queue` & `rmq.order.placement.queue.dlq`  from RabbitMQ Management Console.
+   - This will also delete the exchanges defined for the queues.
+2. Restart the application.
+3. View your order placement queue and dlq on RabbitMQ Management Console. You should see the queues created with the correct bindings
+   - ![img_1.png](task5_orderplacement_dql_correctExchange.png) 
+   - ![img.png](task5_orderplacementdlq_correctExchange.png)
+4. Publish a new order message with same UUID as before.
+5. Check your logs.
+
+Your problem is still not fixed, unfortunately. The message is still being sent to the same exchange. Let me explain why
+this is happening despite the fact that we fixed the exchange mappings.
+
+### **Automatic Re-queueing in RabbitMQ**
+RabbitMQ has a feature called automatic re-queueing. This means that when a message is rejected or not acknowledged by 
+a consumer, RabbitMQ will automatically re-queue the message and send it back to the original queue. 
+This can lead to infinite loops if the consumer keeps rejecting the same message. 
+
+**So, how do we fix this?**
+
+There are two main ways to prevent infinite redelivery of failed messages in a Spring Boot RabbitMQ consumer:
+
+1. **Throw `AmqpRejectAndDontRequeueException`** in your `@RabbitListener` method when processing fails.
+   This signals to Spring and RabbitMQ that the message should be rejected and **not re-queued**.
+   If the queue is configured with a Dead Letter Exchange (DLX), the message will be routed there.
+
+2. **Use manual acknowledgment mode (`autoAck = false`) in low-level consumers**.
+   This allows you to explicitly `ack()`, `nack()`, or `reject()` messages in your code.
+   To send failed messages to the DLX, you must `nack()` or `reject()` them with `requeue = false`. 
+
+For this task, we will use the first approach as it is simpler and more straightforward. Let's wrap the method body in 
+a try-catch block and throw `AmqpRejectAndDontRequeueException` in the catch block. 
+
+![img.png](task5_sending_noAck_errorBackToRabbitMQ.png)
+
+You can read more about this in the RabbitMQ documentation [Automatic Re-queueing](https://www.rabbitmq.com/docs/confirms#automatic-requeueing).
+
+### **Let's Test Again**
+
+1. Restart the application.
+2. Publish a new order message with same UUID as before.
+3. Check your logs. You should see error logs indicating that the message was rejected.
+   
+4. This time, you should see the message has been sent to the DLQ.
+   - ![img.png](task5_showing_messageIsSentToDLQ.png)
+
+
+**Now we have a working RabbitMQ configuration with a dead letter exchange 🎉**
+
+---
+
+## **Publishing message to RabbitMQ**
+
+Let's now look at how to publish messages to RabbitMQ. For this, we'll look at the 

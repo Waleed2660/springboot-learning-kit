@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQRoutes {
 
     public static final String EXCHANGE = "order.exchange";
+    public static final String DLQ_EXCHANGE = "dlq.exchange";
 
     @Value("${rmq.order.placement.queue}")
     private String orderPlacementQueue;
@@ -28,9 +29,6 @@ public class RabbitMQRoutes {
     @Value("${rmq.order.cancellation.queue.dlq}")
     private String orderCancellationQueueDlq;
 
-    /**
-     * This queue is used to check the health of the RabbitMQ server.
-     */
     @Bean
     public Queue healthCheckQueue() {
         return new Queue("healthcheck", true); // durable queue
@@ -49,7 +47,7 @@ public class RabbitMQRoutes {
     @Bean
     public Queue mainQueue() {
         return QueueBuilder.durable(orderPlacementQueue)
-                .withArgument("x-dead-letter-exchange", EXCHANGE)
+                .withArgument("x-dead-letter-exchange", DLQ_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", orderPlacementQueueDlq)
                 .build();
     }
@@ -65,8 +63,8 @@ public class RabbitMQRoutes {
     }
 
     @Bean
-    public Binding dlqBinding(Queue deadLetterQueue, DirectExchange exchange) {
-        return BindingBuilder.bind(deadLetterQueue).to(exchange).with(orderPlacementQueueDlq);
+    public Binding dlqBinding(Queue deadLetterQueue, TopicExchange dlqExchange) {
+        return BindingBuilder.bind(deadLetterQueue).to(dlqExchange).with(orderPlacementQueueDlq);
     }
 
 }
