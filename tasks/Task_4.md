@@ -316,7 +316,7 @@ We should see following behavior in the application:
 
 ### **Sending a Duplicate Order**
 
-Once you publish the same paylaod that you used before, you should see following logs:
+Once you publish the same payload that you used before, you should see following logs:
 
 ```text
 2025-04-18T20:17:14.680+01:00 ERROR 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.l.kit.consumer.NewOrderConsumer      : Received new ActiveMQ order message
