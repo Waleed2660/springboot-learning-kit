@@ -1,7 +1,7 @@
 # Task 5 ~ Working with RabbitMQ
 
-This task will walk you through the process of setting up RabbitMQ in a production ready enterprise application. After that,
-we'll look at setting up new consumer & a producer for the RabbitMQ.
+This task will walk you through the process of setting up RabbitMQ for consumers & producers. There'll be some issues with 
+the configuration that we will need to fix.
 
 ---
 
@@ -47,6 +47,10 @@ graph LR
 ```
 
 ### **Why Exchanges are used in RabbitMQ?**
+
+If you have not googled the Exchange in RabbitMQ yet, I'll give a simple explanation. An exchange in RabbitMQ is a
+routing component that receives messages from producers and determines how to route them to queues. It uses routing
+rules and bindings to decide where each message should go.
 
 - **Flexibility**: Exchanges allow you to define complex routing rules. You can have multiple queues bound to the same 
 exchange with different routing keys.
@@ -108,15 +112,9 @@ Let's look at the RabbitMQRoutes class because that's where our binding for queu
 the method that binds the order placement queue, you'll see that we are using `EXCHANGE` variable for dead letter exchange.
 This means, that when our consumer throws an exception, the message will be sent to a queue which is binded to the same exchange.
 
-![img.png](task5_showingWrongBindingofDLQEx.png)
+![img.png](resources/task5_showingWrongBindingofDLQEx.png)
 
-🤔 **What is an Exchange in RabbitMQ?**
-
-If you have not googled the Exchange in RabbitMQ yet, I'll give a simple explanation. An exchange in RabbitMQ is a 
-routing component that receives messages from producers and determines how to route them to queues. It uses routing 
-rules and bindings to decide where each message should go.
-
-Let's get back to the bug. I can illustrate the problem with a simple diagram. You can see that the failed message will infinitely loop between the
+I can illustrate the problem with a simple diagram. You can see that the failed message will infinitely loop between the
 application and the exchange. 
 ```mermaid
     flowchart LR
@@ -135,20 +133,20 @@ application and the exchange.
 We need to break this loop by pointing the message to correct dead letter exchange. Let's create a new variable in the
 RabbitMQRoutes class.
 
-![img_1.png](task5_adding_new_dlqEx.png)
+![img_1.png](resources/task5_adding_new_dlqEx.png)
 
 Now fix the incorrect binding in the method.
 
-![img.png](task5_fixingTheWrongDLQExBinding.png)
+![img.png](resources/task5_fixingTheWrongDLQExBinding.png)
 
 Now if you look at the `dlqBinding` method, you will see that we are binding the DLQ to the order `exchange`. This is wrong,
 as it should be bound to the `dlqExchange` defined by the @Bean created above.
 
-![img.png](task5_showingwrongmappingforDLQ.png)
+![img.png](resources/task5_showingwrongmappingforDLQ.png)
 
 Let's change that to `dlqExchange` as well. Your config should look like this now.
 
-![img.png](task5_fixingDLQBindingInConfig.png)
+![img.png](resources/task5_fixingDLQBindingInConfig.png)
 
 
 ### **Time to Test our Changes**
@@ -157,8 +155,8 @@ Let's change that to `dlqExchange` as well. Your config should look like this no
    - This will also delete the exchanges defined for the queues.
 2. Restart the application.
 3. View your order placement queue and dlq on RabbitMQ Management Console. You should see the queues created with the correct bindings
-   - ![img_1.png](task5_orderplacement_dql_correctExchange.png) 
-   - ![img.png](task5_orderplacementdlq_correctExchange.png)
+   - ![img_1.png](resources/task5_orderplacement_dql_correctExchange.png) 
+   - ![img.png](resources/task5_orderplacementdlq_correctExchange.png)
 4. Publish a new order message with same UUID as before.
 5. Check your logs.
 
@@ -185,7 +183,7 @@ There are two main ways to prevent infinite redelivery of failed messages in a S
 For this task, we will use the first approach as it is simpler and more straightforward. Let's wrap the method body in 
 a try-catch block and throw `AmqpRejectAndDontRequeueException` in the catch block. 
 
-![img.png](task5_sending_noAck_errorBackToRabbitMQ.png)
+![img.png](resources/task5_sending_noAck_errorBackToRabbitMQ.png)
 
 You can read more about this in the RabbitMQ documentation [Automatic Re-queueing](https://www.rabbitmq.com/docs/confirms#automatic-requeueing).
 
@@ -196,7 +194,7 @@ You can read more about this in the RabbitMQ documentation [Automatic Re-queuein
 3. Check your logs. You should see error logs indicating that the message was rejected.
    
 4. This time, you should see the message has been sent to the DLQ.
-   - ![img.png](task5_showing_messageIsSentToDLQ.png)
+   - ![img.png](resources/task5_showing_messageIsSentToDLQ.png)
 
 
 **Now we have a working RabbitMQ configuration with a dead letter exchange 🎉**
@@ -205,4 +203,48 @@ You can read more about this in the RabbitMQ documentation [Automatic Re-queuein
 
 ## **Publishing message to RabbitMQ**
 
-Let's now look at how to publish messages to RabbitMQ. For this, we'll look at the 
+Let's now look at how to publish messages to RabbitMQ. In case of ActiveMQ, we sent the message to a 
+Virtual Topic so that multiple consumers can consume the same message. In RabbitMQ, we can achieve this by
+sending the message to an exchange which is attached to multiple queues. It'll look something like this:
+
+```mermaid
+flowchart LR
+   subgraph "RabbitMQ Broker"
+        E[Order Notification Exchange]
+        Q1[Analytics Queue]
+        Q2[Inventory Queue]
+        Q3[Notification Queue]
+    end
+    
+    OrderService[Order Service] -->|publish| E
+    E -->|route| Q1
+    E -->|route| Q2
+    E -->|route| Q3
+```
+
+**This is what you need to do:**
+1. Create a new `classic` queue called `rmq.new.order.notification.queue` through RabbitMQ Management Console. 
+   - ![img.png](resources/task5_showing_creatingNewQueue.png)
+2. Open the queue and scroll down to the `Bindings` section. 
+   - Enter the exchange `amq.topic` and routing key `order.notification` & hit the `Bind` button.
+   - ![img_1.png](resources/task5_createBindingForNewQueue.png)
+3. Create & import from `application.properties` in the `OrderEventProducer` class.
+   - ![img.png](resources/task5_newPropertiesForOutboundQueue.png)
+4. Create a new method in OrderEventProducer class that will publish messages to RabbitMQ.
+   - ![img.png](resources/task5_showingNewProducerMethod.png)
+5. Call the producer method in `OrderService::PublishOrderPlacedEvent` as we did for ActiveMQ.
+6. Verify that the event is published to RabbitMQ and the message reaches the newly created queue.
+   - ![img_1.png](resources/task5_verifyingThatNewEventLandedInQueue.png)
+
+
+## **Bonus Task**
+The RabbitMQ Routes are currently configured in not an optimal way. Imagine if we need to add few more
+queues, it would become an absolute mess. You can refactor the routes to use a single method which will
+remove redundancy and make it easier to add new queues. If you'd like to, you can go ahead and do it.
+
+## **Conclusion**
+In this task, we went through the process of setting up RabbitMQ for consumers & producers. 
+We also fixed a bug in the configuration that was causing infinite redelivery of failed messages.
+We also created a new queue and published messages to it. I hope that this task has helped you understand
+RabbitMQ better and how it works with Spring Boot.
+
