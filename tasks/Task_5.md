@@ -237,7 +237,7 @@ flowchart LR
 7. Verify that the event is published to RabbitMQ and the message reaches the newly created queue.
    - ![img_1.png](resources/task5_verifyingThatNewEventLandedInQueue.png)
    - This is the message that was published to the queue.
-   - ![img.png](img.png)
+   - ![img.png](resources/task5_showingMessageContentsForOrderEvent.png)
 
 ### **Decoupling the Producer from the Consumer**
 What we have just done is a very important concept in RabbitMQ. The producer does not need to know about the queues or consumers.
