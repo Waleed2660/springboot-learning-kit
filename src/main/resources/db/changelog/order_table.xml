@@ -43,6 +43,11 @@
                 referencedTableName="customer_address"
                 referencedColumnNames="id"
                 constraintName="fk_order_customer_address"/>
+
+        <rollback>
+            <dropTable tableName="order"/>
+        </rollback>
+
     </changeSet>
 
 </databaseChangeLog>
