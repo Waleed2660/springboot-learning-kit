@@ -98,6 +98,8 @@ file. Open the file and add the following line:
 
 ![img.png](resources/task6_addingNewTableToMasterLog.png)
 
+---
+
 ### Generate SQL using Liquibase
 
 First, we'll generate the SQL to create new table using Liquibase.
@@ -165,8 +167,21 @@ UPDATE public.databasechangeloglock SET LOCKED = FALSE, LOCKEDBY = NULL, LOCKGRA
 
 ```
 
+### Execute the Changeset
+
+You can execute the changeset in two ways:
+1. **Using Gradle Command**: Run the following command to execute the changeset:
+   - `./gradlew update`
+   - This will apply the changeset to your database and create the shipment table.
+2. **Using SQL File**: You can also execute the SQL file directly on your database using DBeaver. Open 
+   the [Migrate.sql](../src/main/resources/db/Migrate.sql) file and run the SQL statements
+   in your database client.
+
+---
 
 ### 🔄 Create Rollback SQL 
+
+_⚠️ Disclaimer: Make sure that your new ChangeSet is executed and the database contains the new Table/Column that you want to rollback_
 
 We also need to create a rollback SQL so that in case if things go wrong, we can roll back the schema changes that
 we have made in our database. 
