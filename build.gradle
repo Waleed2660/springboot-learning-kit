@@ -88,12 +88,7 @@ dependencies {
 liquibase {
 	activities {
 		main {
-			changelogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
-			url 'jdbc:postgresql://localhost:5432/Order_Service'
-			username 'user'
-			password 'password'
-			driver 'org.postgresql.Driver'
-			outputFile 'src/main/resources/db/Migrate.sql'
+			defaultsFile 'src/main/resources/liquibase/liquibase.properties'
 		}
 	}
 	runList = 'main'
