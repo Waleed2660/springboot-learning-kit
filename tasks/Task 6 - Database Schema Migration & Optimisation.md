@@ -1,4 +1,4 @@
-# Task 5 ~ Database Schema Migration & Optimisation
+# Task 6 ~ Database Schema Migration & Optimisation
 
 Flyway and Liquibase are two industry standard tools for database schema migration. In this task, we will be using 
 Liquibase to manage our database schema changes.
