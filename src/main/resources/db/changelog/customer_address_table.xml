@@ -26,6 +26,11 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <rollback>
+            <dropTable tableName="customer_address"/>
+        </rollback>
+
     </changeSet>
 
 </databaseChangeLog>

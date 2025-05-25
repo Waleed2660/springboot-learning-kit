@@ -29,6 +29,11 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
+        <rollback>
+            <dropTable tableName="product_stock"/>
+        </rollback>
+
     </changeSet>
 
     <!-- Adds some dummy data to the table   -->

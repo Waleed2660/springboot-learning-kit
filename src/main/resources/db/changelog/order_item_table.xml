@@ -26,11 +26,17 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
         <addForeignKeyConstraint
                 baseTableName="order_item"
                 baseColumnNames="order_id"
                 referencedTableName="order"
                 referencedColumnNames="uuid"
                 constraintName="fk_order_item_order"/>
+
+        <rollback>
+            <dropTable tableName="order_item"/>
+        </rollback>
+
     </changeSet>
 </databaseChangeLog>
