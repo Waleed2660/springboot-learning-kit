@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet id="shipment_1" author="waleed">
+        <createTable tableName="shipment">
+            <column name="shipment_number" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_uuid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="warehouse_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipping_address_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_amount" type="DECIMAL(19,4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipping_cost" type="DECIMAL(19,4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="shipment_created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="shipment"
+                baseColumnNames="order_uuid"
+                referencedTableName="order"
+                referencedColumnNames="uuid"
+                constraintName="fk_shipment_order_uuid"/>
+
+        <addForeignKeyConstraint
+                baseTableName="shipment"
+                baseColumnNames="shipping_address_id"
+                referencedTableName="customer_address"
+                referencedColumnNames="id"
+                constraintName="fk_shipment_customer_address"/>
+
+        <!--   This section helps Liquibase generate rollback SQL  -->
+        <rollback>
+            <dropTable tableName="shipment"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
