@@ -27,7 +27,40 @@ ensure consistency.
 
 ---
 
-## Integration Tests
+## Integration / Feature Tests
+
+Integration (or feature) tests verify how different parts of the application work together in a real or production-like 
+environment. Unlike unit tests, which focus on isolated components, integration tests ensure that components such as 
+controllers, services, repositories, and external systems interact correctly. Using tools like Testcontainers, these 
+tests can run with real dependencies (e.g., databases, message brokers) inside Docker containers, providing a consistent
+and reproducible environment. This approach helps catch issues related to configuration, data flow, and external 
+integrations, giving greater confidence that the application will function as expected when deployed.
+
+This diagram illustrates how feature/integration tests interact with the Spring application context and real 
+dependencies (like databases or message brokers) provisioned by Testcontainers during test execution.
+
+### Feature Test Request Flow
+
+```mermaid
+graph LR
+    FT[Feature Test] --> C[Controller]
+    C --> S[Service]
+    S --> R[Repository]
+    R --> DB[(PostgreSQL Database)]
+    
+    subgraph Application
+        C
+        S
+        R
+    end
+    subgraph Testcontainers
+        DB
+    end
+    style DB stroke:#333,stroke-width:2px
+```
+
+
+
 
 
 
