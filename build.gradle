@@ -44,6 +44,7 @@ dependencies {
 	def testContainerPostgresVersion = '1.19.0'
 	def junitPlatformVersion = '1.11.4'
 	def openApiSpringDocsVersion = '2.8.6'
+	def testContainerRabbitMQVersion = '1.21.2'
 
 	implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
@@ -62,7 +63,12 @@ dependencies {
 	implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 	implementation "org.postgresql:postgresql:${postgresVersion}"
 
+	// Lombok
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+	testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
 	developmentOnly "org.springframework.boot:spring-boot-docker-compose:${springBootVersion}"
 	runtimeOnly "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
 
@@ -79,6 +85,7 @@ dependencies {
 	testImplementation "org.testcontainers:activemq:${testContainerVersion}"
 	testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
 	testImplementation "org.testcontainers:postgresql:${testContainerPostgresVersion}"
+	testImplementation "org.testcontainers:rabbitmq:${testContainerRabbitMQVersion}"
 
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
 }
