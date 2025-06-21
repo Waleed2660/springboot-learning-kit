@@ -160,13 +160,13 @@ Let's change that to `dlqExchange` as well. Your config should look like this no
 4. Publish a new order message with same UUID as before.
 5. Check your logs.
 
-Your problem is still not fixed, unfortunately. The message is still being sent to the same exchange. Let me explain why
+Your problem is still not fixed, unfortunately. The message is still being sent to the DLQ. Let me explain why
 this is happening despite the fact that we fixed the exchange mappings.
 
 ### **Automatic Re-queueing in RabbitMQ**
 RabbitMQ has a feature called automatic re-queueing. This means that when a message is rejected or not acknowledged by 
 a consumer, RabbitMQ will automatically re-queue the message and send it back to the original queue. 
-This can lead to infinite loops if the consumer keeps rejecting the same message. 
+This can lead to infinite loops if the consumer keeps rejecting the same message OR never sends ACK back to RabbitMQ. 
 
 **So, how do we fix this?**
 

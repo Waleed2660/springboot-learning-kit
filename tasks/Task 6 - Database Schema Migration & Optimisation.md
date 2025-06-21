@@ -1,4 +1,4 @@
-# Task 5 ~ Database Schema Migration & Optimisation
+# Task 6 ~ Database Schema Migration & Optimisation
 
 Flyway and Liquibase are two industry standard tools for database schema migration. In this task, we will be using 
 Liquibase to manage our database schema changes.
@@ -322,7 +322,7 @@ sequenceDiagram
 As we are using Spring Data JPA, we can use the `saveAll()` method to save all the order items in a single call to the database.
 This will create a batch `insert` query which is much more efficient than making individual calls for each order item. While this
 might not seem like a big deal at first, I've seen this issue in production where the application was hammering the database
-with thousands of calls to save each order item, leading to performance issues and timeouts. 
+with thousands of calls to save order items, leading to performance issues and timeouts for clients. 
 
 ```java
     public void saveOrderItems(List<OrderItemRequest> orderItem, long orderUUID) {
