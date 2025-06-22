@@ -293,7 +293,7 @@ sequenceDiagram
     C->>S: saveOrderItems(List<OrderItem>)
     Note over S: List size = N items
 
-    rect rgb(0, 0, 0)
+    rect rgb(40, 40, 40)
         Note right of S: Loop N times
         S->>R: save(orderItem1)
         R->>DB: INSERT INTO order_item
