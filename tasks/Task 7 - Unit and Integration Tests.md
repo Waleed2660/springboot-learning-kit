@@ -337,16 +337,23 @@ graph LR
 
 ### Our Integration Test Setup
 
-Navigate to the [TestContainersConfig.java](../src/test/java/com/springboot/learning/kit/config/TestContainersConfig.java) 
+Navigate to the [BaseIntegrationTest.java](../src/test/java/com/springboot/learning/kit/config/BaseIntegrationTest.java) 
 class to see how the TestContainers are configured. You'll see that we are using test containers to spin up a PostgreSQL,
 RabbitMQ, and ActiveMQ instance for our integration tests.
 
-**Note:** All Integration test classses should be annotated with `@SpringBootTest` to load the full application context & 
-import the `TestContainersConfig` class to ensure that the test containers are started before the tests run.
-```java
-@SpringBootTest
-@Import(TestContainersConfig.class)
-```
+**Note:** All Integration test classses need to extend the `BaseIntegrationTest` class to inherit all necessary 
+configurations. You can look at the [HealthCheckTest.java](../src/test/java/com/springboot/learning/kit/integration/HealthCheckTest.java)
+class to understand how integration tests are written & work in this project.
+
+
+### Time to Write an Integration Test
+
+Let's write an integration test for the `OrderController` to verify that the `POST /orders` endpoint works correctly. We'll
+also verify that the order is saved in the database and can be retrieved.
+
+1. Create a new package named `controller` under `/integration` package.
+2. Create a new class named `OrderControllerTest.java` under the new package.
+3. 
 
 ---
 

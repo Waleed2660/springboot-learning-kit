@@ -11,7 +11,6 @@ public class HealthCheckTest extends BaseIntegrationTest {
     @Test
     void healthCheckShouldReturnOk() {
         String url = getBaseUrl() + "/management/healthcheck";
-        System.out.println("Health Check URL: " + url);
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         System.out.println("Health Check Response: " + response.getBody());
