@@ -41,22 +41,6 @@ class OrderStatusServiceTest {
     void verifyOrderStatusResponse() {
         // Arrange
         long orderUUID = 1L;
-        OrderStatusResponse response = OrderStatusResponse.builder()
-                .orderId(orderUUID)
-                .orderType("ONLINE")
-                .items(List.of(
-                        OrderItemStatusResponse.builder()
-                                .productId(101L)
-                                .quantity(2)
-                                .status("CONFIRMED")
-                                .build(),
-                        OrderItemStatusResponse.builder()
-                                .productId(102L)
-                                .quantity(1)
-                                .status("PENDING")
-                                .build()
-                ))
-                .build();
 
         // Mock the repository method that fetches the order
         when(orderRepository.findById(orderUUID)).thenReturn(Optional.of(createOrder(orderUUID)));
@@ -74,7 +58,7 @@ class OrderStatusServiceTest {
     /**
      * Creates an order with the given order ID.
      * @param orderId
-     * @return
+     * @return Order
      */
     private @NotNull Order createOrder(long orderId) {
         return Order.builder()
@@ -91,7 +75,7 @@ class OrderStatusServiceTest {
     /**
      * Creates a list of order items for the given order ID.
      * @param orderId
-     * @return
+     * @return List<OrderItem>
      */
     private @NotNull List<OrderItem> createOrderItems(long orderId) {
         return List.of(
