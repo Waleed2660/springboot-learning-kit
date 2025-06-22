@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
     <changeSet id="shipment_1" author="waleed">
-        <createTable tableName="shipment">
+        <createTable tableName="shipments">
             <column name="shipment_number" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -34,14 +34,14 @@
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="shipment"
+                baseTableName="shipments"
                 baseColumnNames="order_uuid"
-                referencedTableName="order"
+                referencedTableName="orders"
                 referencedColumnNames="uuid"
                 constraintName="fk_shipment_order_uuid"/>
 
         <addForeignKeyConstraint
-                baseTableName="shipment"
+                baseTableName="shipments"
                 baseColumnNames="shipping_address_id"
                 referencedTableName="customer_address"
                 referencedColumnNames="id"
@@ -49,7 +49,7 @@
 
         <!--   This section helps Liquibase generate rollback SQL  -->
         <rollback>
-            <dropTable tableName="shipment"/>
+            <dropTable tableName="shipments"/>
         </rollback>
 
     </changeSet>

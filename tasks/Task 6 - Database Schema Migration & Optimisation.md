@@ -24,7 +24,7 @@ will contain the changeset for creating the shipment table that Liquibase will a
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
     <changeSet id="shipment_1" author="waleed">
-        <createTable tableName="shipment">
+        <createTable tableName="shipments">
             <column name="shipment_number" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -52,14 +52,14 @@ will contain the changeset for creating the shipment table that Liquibase will a
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="shipment"
+                baseTableName="shipments"
                 baseColumnNames="order_uuid"
-                referencedTableName="order"
+                referencedTableName="orders"
                 referencedColumnNames="uuid"
                 constraintName="fk_shipment_order_uuid"/>
 
         <addForeignKeyConstraint
-                baseTableName="shipment"
+                baseTableName="shipments"
                 baseColumnNames="shipping_address_id"
                 referencedTableName="customer_address"
                 referencedColumnNames="id"
@@ -67,7 +67,7 @@ will contain the changeset for creating the shipment table that Liquibase will a
 
         <!--   This section helps Liquibase generate rollback SQL  -->
         <rollback>
-            <dropTable tableName="shipment"/>
+            <dropTable tableName="shipments"/>
         </rollback>
         
     </changeSet>
@@ -76,7 +76,7 @@ will contain the changeset for creating the shipment table that Liquibase will a
 ```
 
 This changeset will result in following changes to the database:
-- Creates a table named shipment.
+- Creates a table named `shipments`.
 - Columns in shipment:
   - `shipment_number` (BIGINT, primary key, not null)
   - `order_uuid` (BIGINT, not null, foreign key to order.uuid)
@@ -87,7 +87,7 @@ This changeset will result in following changes to the database:
   - `currency` (VARCHAR(3), not null)
   - `shipment_created` (TIMESTAMP, not null)
 - Adds foreign key constraints:
-  - `order_uuid` references `order(uuid)`
+  - `order_uuid` references `orders(uuid)`
   - `shipping_address_id` references `customer_address(id)`
 
 
@@ -153,11 +153,11 @@ UPDATE public.databasechangeloglock SET LOCKED = TRUE, LOCKEDBY = 'localhost (19
 -- *********************************************************************
 
 -- Changeset src/main/resources/db/changelog/shipment_table.xml::shipment_1::waleed
-CREATE TABLE public.shipment (shipment_number BIGINT NOT NULL, order_uuid BIGINT NOT NULL, warehouse_id INTEGER NOT NULL, shipping_address_id BIGINT NOT NULL, total_amount DECIMAL(19, 4) NOT NULL, shipping_cost DECIMAL(19, 4) NOT NULL, currency VARCHAR(3) NOT NULL, shipment_created TIMESTAMP WITHOUT TIME ZONE NOT NULL, CONSTRAINT shipment_pkey PRIMARY KEY (shipment_number));
+CREATE TABLE public.shipments (shipment_number BIGINT NOT NULL, order_uuid BIGINT NOT NULL, warehouse_id INTEGER NOT NULL, shipping_address_id BIGINT NOT NULL, total_amount DECIMAL(19, 4) NOT NULL, shipping_cost DECIMAL(19, 4) NOT NULL, currency VARCHAR(3) NOT NULL, shipment_created TIMESTAMP WITHOUT TIME ZONE NOT NULL, CONSTRAINT shipment_pkey PRIMARY KEY (shipment_number));
 
-ALTER TABLE public.shipment ADD CONSTRAINT fk_shipment_order_uuid FOREIGN KEY (order_uuid) REFERENCES public."order" (uuid);
+ALTER TABLE public.shipments ADD CONSTRAINT fk_shipment_order_uuid FOREIGN KEY (order_uuid) REFERENCES public."order" (uuid);
 
-ALTER TABLE public.shipment ADD CONSTRAINT fk_shipment_customer_address FOREIGN KEY (shipping_address_id) REFERENCES public.customer_address (id);
+ALTER TABLE public.shipments ADD CONSTRAINT fk_shipment_customer_address FOREIGN KEY (shipping_address_id) REFERENCES public.customer_address (id);
 
 INSERT INTO public.databasechangelog (ID, AUTHOR, FILENAME, DATEEXECUTED, ORDEREXECUTED, MD5SUM, DESCRIPTION, COMMENTS, EXECTYPE, CONTEXTS, LABELS, LIQUIBASE, DEPLOYMENT_ID) VALUES ('shipment_1', 'waleed', 'src/main/resources/db/changelog/shipment_table.xml', NOW(), 7, '9:7b5f7fff1bc2f802a6e595d21a59f534', 'createTable tableName=shipment; addForeignKeyConstraint baseTableName=shipment, constraintName=fk_shipment_order_uuid, referencedTableName=order; addForeignKeyConstraint baseTableName=shipment, constraintName=fk_shipment_customer_address, referenc...', '', 'EXECUTED', NULL, NULL, '4.29.2', '8199962613');
 
@@ -204,7 +204,7 @@ UPDATE public.databasechangeloglock SET LOCKED = TRUE, LOCKEDBY = 'localhost (19
 -- *********************************************************************
 
 -- Rolling Back ChangeSet: src/main/resources/db/changelog/shipment_table.xml::shipment_1::waleed
-DROP TABLE public.shipment;
+DROP TABLE public.shipments;
 
 DELETE FROM public.databasechangelog WHERE ID = 'shipment_1' AND AUTHOR = 'waleed' AND FILENAME = 'src/main/resources/db/changelog/shipment_table.xml';
 
@@ -296,19 +296,19 @@ sequenceDiagram
     rect rgb(40, 40, 40)
         Note right of S: Loop N times
         S->>R: save(orderItem1)
-        R->>DB: INSERT INTO order_item
+        R->>DB: INSERT INTO order_items
         DB-->>R: Result
         R-->>S: Saved Item
         
         S->>R: save(orderItem2)
-        R->>DB: INSERT INTO order_item
+        R->>DB: INSERT INTO order_items
         DB-->>R: Result
         R-->>S: Saved Item
 
         Note over S,DB: ... N more calls ...
 
         S->>R: save(orderItemN)
-        R->>DB: INSERT INTO order_item
+        R->>DB: INSERT INTO order_items
         DB-->>R: Result
         R-->>S: Saved Item
     end
@@ -346,7 +346,7 @@ sequenceDiagram
 
     S->>R: saveAll(orderItems)
     Note over R: Batch all N items
-    R->>DB: INSERT INTO order_item (batch of N)
+    R->>DB: INSERT INTO order_items (batch of N)
     Note over DB: Single Transaction
     DB-->>R: Bulk Insert Result
     R-->>S: Saved Items

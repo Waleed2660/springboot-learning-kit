@@ -1,6 +1,7 @@
 package com.springboot.learning.kit.integration.controller;
 
 import com.springboot.learning.kit.config.BaseIntegrationTest;
+import com.springboot.learning.kit.domain.Order;
 import com.springboot.learning.kit.dto.request.CustomerAddressRequest;
 import com.springboot.learning.kit.dto.request.CustomerDetailsRequest;
 import com.springboot.learning.kit.dto.request.OrderItemRequest;
@@ -23,15 +24,22 @@ public class OrderControllerTest extends BaseIntegrationTest {
         OrderRequest orderRequest = createOrderPayload();
 
         // Sending POST request to create an order
-       ResponseEntity<String> response = restTemplate.postForEntity(orderCreationUrl, orderRequest, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(orderCreationUrl, orderRequest, String.class);
 
         // Querying the Database to verify the order was created
+        Order orderFromDB = entityManager.createQuery(
+                "SELECT o FROM Order o WHERE o.uuid = :uuid", Order.class)
+                .setParameter("uuid", orderRequest.getUUID())
+                .getSingleResult();
 
-        // Asserting the response status
+        // Asserting the API Response and Database state
         assertAll(
             () -> assertEquals(200, response.getStatusCode().value(), "Response status should be 200 OK"),
             () -> assertNotNull(response.getBody(), "Response body should not be null"),
-            () -> assertTrue(response.getBody().contains("Order submitted successfully"), "Response body should contain success message")
+            () -> assertTrue(response.getBody().contains("Order submitted successfully"), "Response body should contain success message"),
+            () -> assertNotNull(orderFromDB, "Order should be present in the database"),
+            () -> assertEquals(orderRequest.getUUID(), orderFromDB.getUuid(), "Order UUID should match"),
+            () -> assertEquals(orderRequest.getOrderType(), orderFromDB.getOrderType().toString(), "Order type should match")
         );
     }
 
@@ -71,4 +79,5 @@ public class OrderControllerTest extends BaseIntegrationTest {
         orderRequest.setCurrency("USD");
         return orderRequest;
     }
+
 }

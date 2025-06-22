@@ -355,7 +355,7 @@ Under the hood, Spring Data JPA will generate a SQL query similar to this shown 
 the results in a list of `OrderItem` objects.
 
 ```sql
-SELECT * FROM order_item WHERE order_id = :orderId;
+SELECT * FROM order_items WHERE order_id = :orderId;
 ```
 
 ---

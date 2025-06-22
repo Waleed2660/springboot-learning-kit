@@ -337,9 +337,12 @@ graph LR
 
 ### Our Integration Test Setup
 
-Navigate to the [BaseIntegrationTest.java](../src/test/java/com/springboot/learning/kit/config/BaseIntegrationTest.java) 
+- Navigate to the [BaseIntegrationTest.java](../src/test/java/com/springboot/learning/kit/config/BaseIntegrationTest.java) 
 class to see how the TestContainers are configured. You'll see that we are using test containers to spin up a PostgreSQL,
 RabbitMQ, and ActiveMQ instance for our integration tests.
+- You'll also see that we've got liquibase configured in `application-test.properties` so that the Database & Tables are created
+each time a new PostgreSQL test container spins up.
+
 
 **Note:** All Integration test classses need to extend the `BaseIntegrationTest` class to inherit all necessary 
 configurations. You can look at the [HealthCheckTest.java](../src/test/java/com/springboot/learning/kit/integration/HealthCheckTest.java)

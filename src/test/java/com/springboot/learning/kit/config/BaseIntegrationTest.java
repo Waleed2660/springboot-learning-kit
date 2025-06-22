@@ -1,5 +1,7 @@
 package com.springboot.learning.kit.config;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -37,7 +39,7 @@ public abstract class BaseIntegrationTest {
     /* ⇢ Shared Testcontainers                                              */
     /* -------------------------------------------------------------------- */
 
-    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
+    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
             .withDatabaseName("test_db")
             .withUsername("test")
             .withPassword("test");
@@ -74,5 +76,8 @@ public abstract class BaseIntegrationTest {
         System.setProperty("spring.activemq.user", "admin");
         System.setProperty("spring.activemq.password", "admin");
     }
+
+    @PersistenceContext
+    protected EntityManager entityManager;
 
 }
