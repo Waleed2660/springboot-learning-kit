@@ -287,7 +287,7 @@ class OrderStatusServiceTest {
 When you run the test for the first time, it will create a snapshot file in the `unit/service/__snapshots__` directory.
 It will contain the serialized output of the `OrderStatusResponse` object. The test should pass.
 
-![img.png](task7_showing_snapshot.png)
+![img.png](resources/task7_showing_snapshot.png)
 
 This is the snapshot file content:
 ```json
