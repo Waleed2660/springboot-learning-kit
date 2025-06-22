@@ -1,5 +1,7 @@
 package com.springboot.learning.kit.config;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -36,6 +38,9 @@ public abstract class BaseIntegrationTest {
     /* -------------------------------------------------------------------- */
     /* ⇢ Shared Testcontainers                                              */
     /* -------------------------------------------------------------------- */
+
+    @PersistenceContext
+    protected EntityManager entityManager;
 
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
             .withDatabaseName("test_db")
