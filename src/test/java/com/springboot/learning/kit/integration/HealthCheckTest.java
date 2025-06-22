@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class HealthCheckIT extends BaseIntegrationTest {
+public class HealthCheckTest extends BaseIntegrationTest {
 
     @Test
     void healthCheckShouldReturnOk() {
