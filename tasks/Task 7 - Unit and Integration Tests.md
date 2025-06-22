@@ -307,6 +307,12 @@ Integration tests verify how different parts of the application work together in
 While unit tests focus on isolated components, integration tests ensure that multiple components (controllers, services, 
 repositories, and external systems) interact correctly as a whole.
 
+**Pre-Requisites for Integration Tests**
+
+Make sure that Docker is running on your system as when it comes to integration tests, we need to ensure that the application context is loaded correctly, and all
+dependent components are available such as databases, message brokers, etc.
+
+
 
 ### Integration Test Request Flow
 This diagram illustrates how integration tests interact with the Spring application context and real dependencies
@@ -329,8 +335,18 @@ graph LR
     style DB stroke:#333,stroke-width:2px
 ```
 
+### Our Integration Test Setup
 
+Navigate to the [TestContainersConfig.java](../src/test/java/com/springboot/learning/kit/config/TestContainersConfig.java) 
+class to see how the TestContainers are configured. You'll see that we are using test containers to spin up a PostgreSQL,
+RabbitMQ, and ActiveMQ instance for our integration tests.
 
+**Note:** All Integration test classses should be annotated with `@SpringBootTest` to load the full application context & 
+import the `TestContainersConfig` class to ensure that the test containers are started before the tests run.
+```java
+@SpringBootTest
+@Import(TestContainersConfig.class)
+```
 
 ---
 
