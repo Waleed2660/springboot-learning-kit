@@ -266,8 +266,8 @@ Hibernate: insert into public.customer_details (email,name,phone) values (?,?,?)
 Hibernate: insert into public.customer_address (city,country,state,street,zip_code) values (?,?,?,?,?)
 2025-04-18T19:59:21.263+01:00  INFO 34262 --- [SpringBootLearningKit] [lacement.queue]] c.s.learning.kit.service.OrderService    : Saving new order: OrderRequest(UUID=12345, orderType=ONLINE, customerDetails=CustomerDetailsRequest(name=John Doe, email=john.doe@email.com, phone=+1234567890), customerAddress=CustomerAddressRequest(street=123 Main St, city=New York, state=NY, zipCode=10001, country=USA), orderItems=[OrderItemRequest(productId=1, quantity=2, pricePerUnit=29.99), OrderItemRequest(productId=2, quantity=1, pricePerUnit=49.99)], orderAmount=109.97, currency=USD)
 Hibernate: insert into public.order (currency,customer_address_id,customer_details_id,order_created,order_type,total_amount,uuid) values (?,?,?,?,?,?,?)
-Hibernate: insert into public.order_item (order_id,price_per_unit,product_id,quantity,status) values (?,?,?,?,?)
-Hibernate: insert into public.order_item (order_id,price_per_unit,product_id,quantity,status) values (?,?,?,?,?)
+Hibernate: insert into public.order_items (order_id,price_per_unit,product_id,quantity,status) values (?,?,?,?,?)
+Hibernate: insert into public.order_items (order_id,price_per_unit,product_id,quantity,status) values (?,?,?,?,?)
 2025-04-18T19:59:21.277+01:00  INFO 34262 --- [SpringBootLearningKit] [lacement.queue]] orderPlacementRoute                      : Order processed successfully
 
 ```

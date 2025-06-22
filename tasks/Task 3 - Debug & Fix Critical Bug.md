@@ -31,7 +31,7 @@ application level. Let's investigate the code to find out what's going on.
 
 Let's dive into the Database to understand what's happening there. Before that, I'll share the current database 
 diagram with you to help you understand the relationships between the tables. This shows that the `order` table has a one-to-one relationship with the `customer` and `address` tables,
-and a one-to-many relationship with the `order_item` table.
+and a one-to-many relationship with the `order_items` table.
 
 
 ![img.png](resources/task3_database_diagram.png)
@@ -52,14 +52,14 @@ You should see a single record against that `UUID` in the `order` table. E.g.
 Now, let's run some more queries to see how records in other tables are looking.
 
 ```sql
-SELECT * FROM public.order_item WHERE order_id = 1234567;
+SELECT * FROM public.order_items WHERE order_id = 1234567;
 ```
 
 ![img.png](resources/task3_multiple_records_for_order_items.png)
 
-You should see more than two records against the same `order_id` in the `order_item` table. 
+You should see more than two records against the same `order_id` in the `order_items` table. 
 This indicates that the application is indeed trying to insert orders into the database. While it only 
-inserted 1 record in `order` table, it inserted multiple records in `order_item` table.
+inserted 1 record in `orders` table, it inserted multiple records in `order_items` table.
 
 _Grab the customer details & address Ids and query those tables & see if you can find multiple records_
 
@@ -136,10 +136,10 @@ to database only if all the operations are successful. If any of the operations 
 E.g. this application executes WRITE operations when processing a new order on following tables:
 - customer_details
 - customer_address
-- order
-- order_item
+- orders
+- order_items
 
-If the application fails to INSERT data for `order_item` table, we want to rollback all the WRITE operations that we
+If the application fails to INSERT data for `order_items` table, we want to rollback all the WRITE operations that we
 just did for previous tables. This is where `@Transactional` annotation comes in. It tells Spring to start a transaction 
 before executing the method and commit the transaction after the method is executed. If any exception occurs, Spring will 
 rollback all the changes made to the database.
