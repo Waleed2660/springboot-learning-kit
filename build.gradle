@@ -86,6 +86,7 @@ dependencies {
 	testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
 	testImplementation "org.testcontainers:postgresql:${testContainerPostgresVersion}"
 	testImplementation "org.testcontainers:rabbitmq:${testContainerRabbitMQVersion}"
+	testImplementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
 }
