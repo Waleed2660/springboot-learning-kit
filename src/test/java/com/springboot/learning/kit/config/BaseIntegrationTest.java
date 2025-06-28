@@ -39,6 +39,9 @@ public abstract class BaseIntegrationTest {
     /* ⇢ Shared Testcontainers                                              */
     /* -------------------------------------------------------------------- */
 
+    @PersistenceContext
+    protected EntityManager entityManager;
+
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
             .withDatabaseName("test_db")
             .withUsername("test")
@@ -76,8 +79,5 @@ public abstract class BaseIntegrationTest {
         System.setProperty("spring.activemq.user", "admin");
         System.setProperty("spring.activemq.password", "admin");
     }
-
-    @PersistenceContext
-    protected EntityManager entityManager;
 
 }
