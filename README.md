@@ -1,4 +1,4 @@
-<img src="tasks/resources/springboot.svg" alt="Spring Boot Logo" width="40" style="margin-right: 10px;"/> <h1 style="display: inline; margin: 0;">Spring Boot Learning Kit</h1>
+<img src="tasks/resources/springboot.svg" alt="Spring Boot Logo" width="30" style="margin-right: 10px;"/> <h1 style="display: inline; margin: 0;">Spring Boot Learning Kit</h1>
 
 ## **Table of Contents**
 - [Introduction](#introduction)
