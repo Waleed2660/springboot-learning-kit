@@ -64,7 +64,8 @@ public abstract class BaseIntegrationTest {
         rabbitmq.start();
         activemq.start();
 
-        // Set system properties for test containers
+        // These properties are placed here instead of application-test.properties because test containers
+        // use random ports, and we need to set them dynamically
         System.setProperty("spring.datasource.url", postgres.getJdbcUrl());
         System.setProperty("spring.datasource.username", postgres.getUsername());
         System.setProperty("spring.datasource.password", postgres.getPassword());
