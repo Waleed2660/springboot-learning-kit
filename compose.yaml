@@ -41,5 +41,23 @@ services:
       - '--web.enable-lifecycle'
     restart: unless-stopped
 
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana_dashboard
+    ports:
+      - "3000:3000"   # Grafana web UI port
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_DOMAIN=localhost
+      - GF_SMTP_ENABLED=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
 volumes:
   prometheus_data:
+  grafana_data:

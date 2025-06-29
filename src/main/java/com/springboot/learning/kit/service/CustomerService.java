@@ -4,6 +4,7 @@ import com.springboot.learning.kit.domain.CustomerDetails;
 import com.springboot.learning.kit.dto.request.CustomerDetailsRequest;
 import com.springboot.learning.kit.repository.CustomerDetailsRepository;
 import com.springboot.learning.kit.transformer.OrderTransformer;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class CustomerService {
      * @param customerDetailsRequest the customer details request object
      * @return the ID of the saved customer details
      */
+    @Timed(value = "database.write.operations", description = "Time taken to save customer details to database")
     public long saveCustomerDetails(CustomerDetailsRequest customerDetailsRequest) {
         CustomerDetails customerDetails = orderTransformer.transformCustomerDetailsToDomain(customerDetailsRequest);
         return customerDetailsRepository.save(customerDetails).getId();

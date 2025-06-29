@@ -7,6 +7,7 @@ import com.springboot.learning.kit.dto.response.OrderStatusResponse;
 import com.springboot.learning.kit.exception.OrderNotFoundException;
 import com.springboot.learning.kit.repository.OrderItemRepository;
 import com.springboot.learning.kit.repository.OrderRepository;
+import io.micrometer.core.annotation.Timed;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class OrderStatusService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
 
+    @Timed(value = "database.read.operations", description = "Time taken to retrieve order status from database")
     public OrderStatusResponse getOrderStatus(Long orderUUID) {
 
         // first fetch the order from the repository

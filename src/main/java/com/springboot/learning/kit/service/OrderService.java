@@ -7,6 +7,7 @@ import com.springboot.learning.kit.exception.DuplicateOrderException;
 import com.springboot.learning.kit.producer.OrderEventProducer;
 import com.springboot.learning.kit.transformer.OrderEventTransformer;
 import com.springboot.learning.kit.transformer.OrderTransformer;
+import io.micrometer.core.annotation.Timed;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class OrderService {
     private final OrderEventProducer orderEventProducer;
     private final OrderEventTransformer orderEventTransformer;
 
+    @Timed(value = "database.write.operations", description = "Time taken to save new order to database")
     public void saveNewOrder(OrderRequest orderRequest, long customerId, long addressId) {
         log.info("Saving new order: {}", orderRequest);
 
