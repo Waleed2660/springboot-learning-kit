@@ -188,7 +188,7 @@ this class.
 6. Inject the `OrderStatusService` using `@InjectMocks`.
 7. You'd also need to mock the `OrderRepository` & `OrderItemRepository` dependency using `@Mock`.
 
-**You're encouraged to go ahead & write the test method yourself & see if you can get it to work, but here's a reference implementation:**
+**⚠️You're encouraged to go ahead & write the test method yourself & see if you can get it to work, but here's a reference implementation:**
 
 ```java
 @ExtendWith({MockitoExtension.class, SnapshotExtension.class})
@@ -432,17 +432,181 @@ public class OrderControllerTest extends BaseIntegrationTest {
     }
 
 }
-
 ```
 
 ---
 
+## 🎯 **Challenge: End-to-End Order Lifecycle Integration Test**
 
+Your goal is to now create a comprehensive integration test that simulates a complete order lifecycle from creation to status verification. This test will validate the entire flow through multiple endpoints and ensure data integrity across the application.
 
+#### **📋 Test Requirements**
 
+Create an integration test named `OrderLifecycleIntegrationTest` that performs the following operations:
 
+1. **Order Creation**: Submit a new order with multiple items through the `/order/submit` endpoint
+2. **Database Verification**: Verify the order and all related data are correctly persisted
+3. **Status Retrieval**: Fetch the order status using the `/order/status/{id}` endpoint
+4. **Comprehensive Assertions**: Validate all aspects of the order data
+
+#### **🔧 Implementation Steps**
+
+**Step 1: Create the Test Class**
+```java
+@TestMethodOrder(OrderAnnotation.class)
+public class OrderLifecycleIntegrationTest extends BaseIntegrationTest {
+    
+    private static final Long TEST_ORDER_UUID = 987654321L;
+    private static OrderRequest submittedOrder;
+    
+    // Your test methods go here
+}
+```
+
+**Step 2: Test Method 1 - Order Submission & Database Persistence**
+```java
+@Test
+@Order(1)
+void submitOrder_ShouldCreateOrderInDatabase() {
+    // TODO: Implement this test method
+    // 1. Create an OrderRequest with TEST_ORDER_UUID
+    // 2. Include 3 different order items with varying quantities and prices
+    // 3. Submit the order via POST /order/submit
+    // 4. Assert successful HTTP response
+    // 5. Query database to verify:
+    //    - Order record exists with correct details
+    //    - All 3 OrderItem records are created
+    //    - CustomerDetails record is persisted
+    //    - CustomerAddress record is persisted
+    // 6. Store the submitted order in static variable for next test
+}
+```
+
+**Step 3: Test Method 2 - Status Retrieval & Data Validation**
+```java
+@Test
+@Order(2)
+void getOrderStatus_ShouldReturnCompleteOrderInformation() {
+    // TODO: Implement this test method
+    // 1. Call GET /order/status/{TEST_ORDER_UUID}
+    // 2. Assert successful HTTP response
+    // 3. Validate OrderStatusResponse contains:
+    //    - Correct order ID and type
+    //    - All 3 order items with correct product IDs, quantities, and statuses
+    //    - Total amount matches calculated sum
+    //    - Currency is correct
+    // 4. Compare with originally submitted order data
+}
+```
+
+#### **🎨 Advanced Challenge Requirements**
+
+To make this test more comprehensive and realistic, include these additional validations:
+
+**Error Scenario Testing:**
+```java
+@Test
+@Order(3)
+void getOrderStatus_WithNonExistentOrder_ShouldReturn404() {
+    // Test error handling for non-existent orders
+}
+```
+
+**Concurrent Order Testing:**
+```java
+@Test
+@Order(4)
+void submitMultipleOrders_ShouldMaintainDataIntegrity() {
+    // Submit multiple orders concurrently and verify data integrity
+}
+```
+
+#### **📊 Sample Test Data Structure**
+
+Your test should use a rich, realistic order structure:
+
+```java
+private OrderRequest createComprehensiveOrderRequest() {
+    OrderRequest order = new OrderRequest();
+    order.setUUID(TEST_ORDER_UUID);
+    order.setOrderType("ONLINE");
+    
+    // Premium customer details
+    CustomerDetailsRequest customer = new CustomerDetailsRequest();
+    customer.setName("Sarah Johnson");
+    customer.setEmail("sarah.johnson@techcorp.com");
+    customer.setPhone("+1-555-0123");
+    
+    // International shipping address
+    CustomerAddressRequest address = new CustomerAddressRequest();
+    address.setStreet("456 Innovation Drive, Suite 200");
+    address.setCity("San Francisco");
+    address.setState("CA");
+    address.setZipCode("94105");
+    address.setCountry("USA");
+    
+    // Diverse product mix
+    List<OrderItemRequest> items = List.of(
+        createOrderItem(101L, 2, new BigDecimal("89.99")),    // Electronics
+        createOrderItem(202L, 1, new BigDecimal("149.50")),   // Premium item
+        createOrderItem(303L, 5, new BigDecimal("12.75"))     // Bulk item
+    );
+    
+    order.setCustomerDetails(customer);
+    order.setCustomerAddress(address);
+    order.setOrderItems(items);
+    order.setOrderAmount(calculateTotalAmount(items));
+    order.setCurrency("USD");
+    
+    return order;
+}
+```
+
+#### **🏆 Success Criteria**
+
+Your integration test passes when it successfully:
+
+- ✅ Creates an order with complex data through the REST API
+- ✅ Verifies all database tables are correctly populated
+- ✅ Retrieves order status through the status endpoint
+- ✅ Validates complete data consistency between submission and retrieval
+- ✅ Demonstrates proper error handling for edge cases
+- ✅ Provides comprehensive assertions with meaningful error messages
+
+#### **💡 Pro Tips**
+
+1. **Use AssertJ** for fluent assertions
+2. **Leverage @Sql annotations** for test data cleanup if needed
+3. **Use @Transactional(rollback = true)** to ensure test isolation
+4. **Create helper methods** for common assertion patterns
+5. **Add detailed logging** to trace test execution flow
+
+This comprehensive integration test will demonstrate your understanding of:
+- REST API testing with Spring Boot
+- Database interaction validation
+- End-to-end workflow testing
+- Data integrity verification
+- Error handling validation
+
+Good luck! 🎯
+
+---
 
 ## **Conclusion**
 
+Throughout this task, you've learned to implement both unit and integration tests that form the backbone of a robust, 
+production-ready Spring Boot application. Unit tests ensure individual components work correctly in isolation, while
+integration tests validate that the entire system functions cohesively.
 
+**Key Takeaways:**
 
+- **Unit Tests**: Fast, isolated, and focused on individual component logic
+- **Integration Tests**: Comprehensive, realistic, and validate end-to-end workflows
+- **Snapshot Testing**: Captures complex output for regression testing
+- **TestContainers**: Provides consistent, production-like test environments
+- **Database Testing**: Ensures data integrity and proper persistence
+
+🎉 By completing this task, you've built a solid foundation for maintaining code quality, catching regressions early, and 
+deploying with confidence. Remember: good tests are an investment in your application's reliability.
+
+---
