@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerDetailsValidator implements Validator<CustomerDetailsRequest> {
 
-    private final static String VALID_PHONE_REGEX = "^\\+?(\\d{1,3})?[-.\\s]?(\\(?\\d{3}\\)?[-.\\s]?)?(\\d[-.\\s]?){6,9}\\d$";
+    private static final String VALID_PHONE_REGEX =
+            "^\\+?(\\d{1,3})?[-.\\s]?(\\(?\\d{3}\\)?[-.\\s]?)?(\\d[-.\\s]?){6,9}\\d$";
 
     @Override
     public void validate(CustomerDetailsRequest customerDetails) {
@@ -41,6 +42,5 @@ public class CustomerDetailsValidator implements Validator<CustomerDetailsReques
         if (!phoneNumber.matches(VALID_PHONE_REGEX)) {
             throw new OrderValidationException("Invalid phone number provided: " + phoneNumber);
         }
-
     }
 }

@@ -27,5 +27,4 @@ public class OrderValidationService {
         orderTypeValidator.validate(orderRequest.getOrderType());
         customerDetailsValidator.validate(orderRequest.getCustomerDetails());
     }
-
 }

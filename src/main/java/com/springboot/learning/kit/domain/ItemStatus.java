@@ -19,6 +19,4 @@ public enum ItemStatus {
         }
         throw new IllegalArgumentException("Unknown status: " + status);
     }
-
 }
-

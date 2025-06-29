@@ -39,8 +39,10 @@ public class OrderEventProducer {
 
         } catch (Exception e) {
             log.error("Failed to send new order notification to virtual topic", e);
-            throw new OrderEventProducerException("Failed to send new order notification to virtual " +
-                    "topic for order: " + orderPlacedEvent.getOrderId(), e);
+            throw new OrderEventProducerException(
+                    "Failed to send new order notification to virtual " + "topic for order: "
+                            + orderPlacedEvent.getOrderId(),
+                    e);
         }
     }
 
@@ -54,8 +56,10 @@ public class OrderEventProducer {
 
         } catch (Exception e) {
             log.error("Failed to send new order notification to rabbitMQ queue", e);
-            throw new OrderEventProducerException("Failed to send new order notification to virtual " +
-                    "topic for order: " + orderPlacedEvent.getOrderId(), e);
+            throw new OrderEventProducerException(
+                    "Failed to send new order notification to virtual " + "topic for order: "
+                            + orderPlacedEvent.getOrderId(),
+                    e);
         }
     }
 }

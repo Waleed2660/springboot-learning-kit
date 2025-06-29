@@ -3,12 +3,11 @@ package com.springboot.learning.kit.service;
 import com.springboot.learning.kit.domain.OrderType;
 import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.processor.AbstractOrderProcessor;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -27,7 +26,8 @@ public class OrderProcessingService {
         orderProcessors.stream()
                 .filter(processor -> processor.supports(OrderType.valueOf(orderRequest.getOrderType())))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No processor found for order type: " + orderRequest.getOrderType()))
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No processor found for order type: " + orderRequest.getOrderType()))
                 .processOrder(orderRequest);
     }
 }

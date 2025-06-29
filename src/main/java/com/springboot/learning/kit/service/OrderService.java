@@ -1,8 +1,8 @@
 package com.springboot.learning.kit.service;
 
 import com.springboot.learning.kit.domain.Order;
-import com.springboot.learning.kit.event.OrderPlacedEvent;
 import com.springboot.learning.kit.dto.request.OrderRequest;
+import com.springboot.learning.kit.event.OrderPlacedEvent;
 import com.springboot.learning.kit.exception.DuplicateOrderException;
 import com.springboot.learning.kit.producer.OrderEventProducer;
 import com.springboot.learning.kit.transformer.OrderEventTransformer;

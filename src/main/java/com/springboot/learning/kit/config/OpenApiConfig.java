@@ -16,5 +16,4 @@ public class OpenApiConfig {
                         .description("API Documentation for Spring Boot Learning Kit")
                         .version("v1.0.0"));
     }
-
 }

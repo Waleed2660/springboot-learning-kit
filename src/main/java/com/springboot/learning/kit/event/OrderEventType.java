@@ -9,7 +9,3 @@ public enum OrderEventType {
     ORDER_REFUNDED,
     ORDER_COMPLETED;
 }
-
-
-
-

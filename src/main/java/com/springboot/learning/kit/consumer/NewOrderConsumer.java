@@ -32,8 +32,7 @@ public class NewOrderConsumer {
             log.error("Received new ActiveMQ order message");
             OrderRequest orderRequest = toOrderRequest(message);
             orderProcessingService.processNewOrder(orderRequest);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Failed to process ActiveMQ order message: {}", message, e);
             throw new OrderProcessingException("Failed to process order message: " + message, e);
         }
@@ -50,8 +49,7 @@ public class NewOrderConsumer {
             log.error("Received new RabbitMQ order message");
             OrderRequest orderRequest = toOrderRequest(message);
             orderProcessingService.processNewOrder(orderRequest);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Failed to process RabbitMQ order message: {}", message, e);
             throw new AmqpRejectAndDontRequeueException("Non-retryable error", e);
         }

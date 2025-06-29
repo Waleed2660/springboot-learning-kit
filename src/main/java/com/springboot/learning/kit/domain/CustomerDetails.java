@@ -20,5 +20,4 @@ public class CustomerDetails {
     private String name;
     private String email;
     private String phone;
-
 }

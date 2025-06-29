@@ -30,7 +30,8 @@ public abstract class BaseIntegrationTest {
 
     protected String getBaseUrl() {
         if (port == null || port == 0) {
-            throw new IllegalStateException("Port for Base URL has not been injected yet. Check BaseIntegrationTest class");
+            throw new IllegalStateException(
+                    "Port for Base URL has not been injected yet. Check BaseIntegrationTest class");
         }
         return "http://localhost:" + port + "/OrderService";
     }
@@ -47,13 +48,10 @@ public abstract class BaseIntegrationTest {
             .withUsername("test")
             .withPassword("test");
 
-    private static final RabbitMQContainer rabbitmq = new RabbitMQContainer(
-            DockerImageName.parse("rabbitmq:latest")
-    );
+    private static final RabbitMQContainer rabbitmq = new RabbitMQContainer(DockerImageName.parse("rabbitmq:latest"));
 
-    private static final ActiveMQContainer activemq = new ActiveMQContainer(
-            DockerImageName.parse("apache/activemq-classic:latest")
-    );
+    private static final ActiveMQContainer activemq =
+            new ActiveMQContainer(DockerImageName.parse("apache/activemq-classic:latest"));
 
     /* -------------------------------------------------------------------- */
     /* ⇢ Wire container properties into Spring                              */
@@ -79,5 +77,4 @@ public abstract class BaseIntegrationTest {
         System.setProperty("spring.activemq.user", "admin");
         System.setProperty("spring.activemq.password", "admin");
     }
-
 }

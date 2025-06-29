@@ -7,10 +7,9 @@ import com.springboot.learning.kit.dto.response.OrderStatusResponse;
 import com.springboot.learning.kit.exception.OrderNotFoundException;
 import com.springboot.learning.kit.repository.OrderItemRepository;
 import com.springboot.learning.kit.repository.OrderRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,8 @@ public class OrderStatusService {
     public OrderStatusResponse getOrderStatus(Long orderUUID) {
 
         // first fetch the order from the repository
-        Order order = orderRepository.findById(orderUUID)
+        Order order = orderRepository
+                .findById(orderUUID)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found with UUID: " + orderUUID));
 
         // then fetch the order items associated with the order

@@ -18,8 +18,11 @@ public class OnlineOrderProcessor extends AbstractOrderProcessor {
     private final AddressService addressService;
     private final OrderItemService orderItemService;
 
-    public OnlineOrderProcessor(OrderService orderService, CustomerService customerService,
-                                AddressService addressService, OrderItemService orderItemService) {
+    public OnlineOrderProcessor(
+            OrderService orderService,
+            CustomerService customerService,
+            AddressService addressService,
+            OrderItemService orderItemService) {
         super(orderService, customerService, addressService, orderItemService);
 
         this.orderService = orderService;
@@ -44,5 +47,4 @@ public class OnlineOrderProcessor extends AbstractOrderProcessor {
 
         orderService.publishOrderPlacedEvent(orderRequest);
     }
-
 }

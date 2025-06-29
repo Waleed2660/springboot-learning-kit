@@ -1,18 +1,17 @@
 package com.springboot.learning.kit.integration.controller;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.springboot.learning.kit.config.BaseIntegrationTest;
 import com.springboot.learning.kit.domain.Order;
 import com.springboot.learning.kit.dto.request.CustomerAddressRequest;
 import com.springboot.learning.kit.dto.request.CustomerDetailsRequest;
 import com.springboot.learning.kit.dto.request.OrderItemRequest;
 import com.springboot.learning.kit.dto.request.OrderRequest;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.ResponseEntity;
-
 import java.math.BigDecimal;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 
 public class OrderControllerTest extends BaseIntegrationTest {
 
@@ -27,20 +26,22 @@ public class OrderControllerTest extends BaseIntegrationTest {
         ResponseEntity<String> response = restTemplate.postForEntity(orderCreationUrl, orderRequest, String.class);
 
         // Querying the Database to verify the order was created
-        Order orderFromDB = entityManager.createQuery(
-                "SELECT o FROM Order o WHERE o.uuid = :uuid", Order.class)
+        Order orderFromDB = entityManager
+                .createQuery("SELECT o FROM Order o WHERE o.uuid = :uuid", Order.class)
                 .setParameter("uuid", orderRequest.getUUID())
                 .getSingleResult();
 
         // Asserting the API Response and Database state
         assertAll(
-            () -> assertEquals(200, response.getStatusCode().value(), "Response status should be 200 OK"),
-            () -> assertNotNull(response.getBody(), "Response body should not be null"),
-            () -> assertTrue(response.getBody().contains("Order submitted successfully"), "Response body should contain success message"),
-            () -> assertNotNull(orderFromDB, "Order should be present in the database"),
-            () -> assertEquals(orderRequest.getUUID(), orderFromDB.getUuid(), "Order UUID should match"),
-            () -> assertEquals(orderRequest.getOrderType(), orderFromDB.getOrderType().toString(), "Order type should match")
-        );
+                () -> assertEquals(200, response.getStatusCode().value(), "Response status should be 200 OK"),
+                () -> assertNotNull(response.getBody(), "Response body should not be null"),
+                () -> assertTrue(
+                        response.getBody().contains("Order submitted successfully"),
+                        "Response body should contain success message"),
+                () -> assertNotNull(orderFromDB, "Order should be present in the database"),
+                () -> assertEquals(orderRequest.getUUID(), orderFromDB.getUuid(), "Order UUID should match"),
+                () -> assertEquals(
+                        orderRequest.getOrderType(), orderFromDB.getOrderType().toString(), "Order type should match"));
     }
 
     private OrderRequest createOrderPayload() {
@@ -73,11 +74,9 @@ public class OrderControllerTest extends BaseIntegrationTest {
         item2.setPricePerUnit(BigDecimal.valueOf(49.99));
 
         orderRequest.setOrderItems(List.of(item1, item2));
-        orderRequest.setOrderAmount(BigDecimal.valueOf(
-                item1.getPricePerUnit().doubleValue() * item1.getQuantity() +
-                item2.getPricePerUnit().doubleValue() * item2.getQuantity()));
+        orderRequest.setOrderAmount(BigDecimal.valueOf(item1.getPricePerUnit().doubleValue() * item1.getQuantity()
+                + item2.getPricePerUnit().doubleValue() * item2.getQuantity()));
         orderRequest.setCurrency("USD");
         return orderRequest;
     }
-
 }

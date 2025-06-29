@@ -1,10 +1,10 @@
 package com.springboot.learning.kit.integration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.springboot.learning.kit.config.BaseIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class HealthCheckTest extends BaseIntegrationTest {
 
@@ -16,7 +16,9 @@ public class HealthCheckTest extends BaseIntegrationTest {
         System.out.println("Health Check Response: " + response.getBody());
         assertEquals(200, response.getStatusCode().value());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody().contains("""
+        assertTrue(response.getBody()
+                .contains(
+                        """
                 ActiveMQ: OK
                 RabbitMQ: OK
                 Database: OK"""));

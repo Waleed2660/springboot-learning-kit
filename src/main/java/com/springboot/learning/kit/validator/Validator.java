@@ -10,5 +10,4 @@ public interface Validator<T> {
      * @throws OrderValidationException if validation fails
      */
     void validate(T object) throws OrderValidationException;
-
 }
