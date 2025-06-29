@@ -21,7 +21,7 @@ public class CustomerService {
      * @param customerDetailsRequest the customer details request object
      * @return the ID of the saved customer details
      */
-    @Timed(value = "database.write.operations", description = "Time taken to save customer details to database")
+    @Timed(value = "save.new.customer", description = "Time taken to save customer details to database")
     public long saveCustomerDetails(CustomerDetailsRequest customerDetailsRequest) {
         CustomerDetails customerDetails = orderTransformer.transformCustomerDetailsToDomain(customerDetailsRequest);
         return customerDetailsRepository.save(customerDetails).getId();

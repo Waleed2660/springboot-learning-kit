@@ -15,7 +15,7 @@ public class AddressService {
     private final OrderTransformer orderTransformer;
     private final CustomerAddressRepository customerAddressRepository;
 
-    @Timed(value = "database.write.operations", description = "Time taken to save customer address to database")
+    @Timed(value = "save.new.address", description = "Time taken to save customer address to database")
     public long saveCustomerAddress(CustomerAddressRequest customerAddressRequest) {
         CustomerAddress customerAddress = orderTransformer.transformCustomerAddressToDomain(customerAddressRequest);
         return customerAddressRepository.save(customerAddress).getId();

@@ -193,11 +193,10 @@ It will look like this:
 
 **Add Database Connection Pool Panel**:
    ```promql
-   hikaricp_connections_active
+   hikaricp_connections{pool="HikariPool-1"}
    ```
    - Set visualization type to `Stat`
    - Title: "Active DB Connections"
-
 ### **Save the Dashboard**:
 - Click `Save dashboard` icon
 - Name it whatever you like.
@@ -241,6 +240,22 @@ management:
         database.write.operations: true
 ```
 
+### **Create Configuration Class**
+
+You need to create a configuration class to enable the `@Timed` aspect. Create a new class `MetricsConfig.java` in your
+`/config` package:
+
+```java
+@Configuration
+public class MetricsConfig {
+    
+    @Bean
+    public TimedAspect timedAspect(MeterRegistry registry) {
+        return new TimedAspect(registry);
+    }
+}
+```
+
 ---
 
 ## Step 8: Implement @Timed Annotations
@@ -251,58 +266,61 @@ Let's add `@Timed` annotations to track database operations in our service layer
 
 Add `@Timed` annotation to methods that perform database operations to capture specific metrics.
 
-![img.png](resources/task10_timedOrderService.png)
+![img_1.png](resources/task10_orderServiceSave.png)
 
 ### **Update OrderStatusService for Read Operations**
 
 Add timing metrics for order status retrieval operation.
 
-![img.png](resources/task10_orderStatus.png)
-
+![img.png](resources/task10_orderStatusGetTimed.png)
 
 ### **Update CustomerService for Customer Details Operations**
 
 Add timing for customer-related database operation.
 
-![img.png](resources/task10_customerDetailService.png)
+![img.png](resources/task10_saveCustomerTimed.png)
 
 ### **Update AddressService for Customer Address Operations**
 
 Add timing for address-related database operation.
 
-![img.png](resources/task10_customerAddress.png)
+![img.png](resources/task10_saveAddressTimed.png)
 
 ---
 
 ## Step 9: Create Database Operations Dashboard
 
-After implementing @Timed annotations, create a dedicated dashboard for database operations:
+After implementing `@Timed` annotations, create a dedicated dashboard for database operations:
 
 ### **Database Performance Queries**
 
-1. **Database Write Operations**:
+1. **Saving Order**:
+
+- This will give you count of orders successfully saved per second.
    ```promql
-   # Average write operation time
-   rate(database_write_operations_seconds_sum[5m]) / rate(database_write_operations_seconds_count[5m])
+   rate(save_new_order_seconds_count{exception="none"}[1m])
+   ```
+- To get order rate per minute, multiply by 60:
+   ```promql
+   rate(save_new_order_seconds_count{exception="none"}[1m]) * 60
    ```
 
-2. **Database Read Operations**:
+2. **Saving Customer Details**:
+- Use following query:
    ```promql
-   # Average read operation time
-   rate(database_read_operations_seconds_sum[5m]) / rate(database_read_operations_seconds_count[5m])
+   rate(save_new_customer_seconds_count{exception="none"}[1m]) * 60
    ```
 
-3. **Database Operation Count**:
+3. **Saving Customer Address**:
+- Use following query:
    ```promql
-   # Total database operations per second
-   sum(rate(database_write_operations_seconds_count[5m])) + sum(rate(database_read_operations_seconds_count[5m]))
+   rate(save_new_address_seconds_count{exception="none"}[1m]) * 60
    ```
 
-4. **95th Percentile Response Times**:
-   ```promql
-   # 95th percentile for database operations
-   histogram_quantile(0.95, rate(database_write_operations_seconds_bucket[5m]))
-   ```
+
+#### ⭐️Your dashboard should look something like this:
+
+![img.png](resources/task10_finalGrafanaDashboard.png)
 
 ---
 
@@ -354,3 +372,5 @@ With Grafana now integrated with your Spring Boot application, you have:
 - ✅ **Historical Analysis**: Trend analysis and capacity planning
 
 Your Spring Boot application now has enterprise-grade monitoring and visualization! 📊📈
+
+

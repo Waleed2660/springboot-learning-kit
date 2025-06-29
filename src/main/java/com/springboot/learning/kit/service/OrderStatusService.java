@@ -19,7 +19,7 @@ public class OrderStatusService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
 
-    @Timed(value = "database.read.operations", description = "Time taken to retrieve order status from database")
+    @Timed(value = "read.order.status", description = "Time taken to retrieve order status from database")
     public OrderStatusResponse getOrderStatus(Long orderUUID) {
 
         // first fetch the order from the repository

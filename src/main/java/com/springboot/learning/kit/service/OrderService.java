@@ -24,7 +24,7 @@ public class OrderService {
     private final OrderEventProducer orderEventProducer;
     private final OrderEventTransformer orderEventTransformer;
 
-    @Timed(value = "database.write.operations", description = "Time taken to save new order to database")
+    @Timed(value = "save.new.order", description = "Time taken to save new order to database")
     public void saveNewOrder(OrderRequest orderRequest, long customerId, long addressId) {
         log.info("Saving new order: {}", orderRequest);
 
