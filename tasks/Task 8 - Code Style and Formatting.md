@@ -52,7 +52,6 @@ not a big fan of 2-line indentation.
 - Allows 120-character lines, which is more readable than 80 or 100
 - Provides 4-line indentation, which is easier on the eyes
 - Produces clean, readable code
-- Works seamlessly with Spotless
 - Has excellent IDE integration
 
 ---
