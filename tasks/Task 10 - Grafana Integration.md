@@ -251,20 +251,20 @@ Let's add `@Timed` annotations to track database operations in our service layer
 
 Add `@Timed` annotation to methods that perform database operations to capture specific metrics.
 
-![img.png](task10_timedOrderService.png)
+![img.png](resources/task10_timedOrderService.png)
 
 ### **Update OrderStatusService for Read Operations**
 
 Add timing metrics for order status retrieval operation.
 
-![img.png](task10_orderStatus.png)
+![img.png](resources/task10_orderStatus.png)
 
 
 ### **Update CustomerService for Customer Details Operations**
 
 Add timing for customer-related database operation.
 
-![img.png](task10_customerDetailService.png)
+![img.png](resources/task10_customerDetailService.png)
 
 ### **Update AddressService for Customer Address Operations**
 
