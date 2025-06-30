@@ -33,26 +33,20 @@ in building modern applications. The aim of this project is to:
 - **ActiveMQ**: Message broker for asynchronous communication.
 - **RabbitMQ**: Alternative message broker for asynchronous communication.
 - **PostgreSQL**: Relational database for data storage.
+- **Prometheus**: Monitoring and alerting toolkit.
+- **Grafana**: Visualization tool for monitoring data.
+- **Jmeter**: Java application performance monitoring tool.
 - **Docker**: Containerization platform for local development.
 
 ---
 
-## Getting Started
-
-1. **Fork this repository** to your own GitHub account
-2. 📥 Clone your fork:
- ```bash
-   git clone https://github.com/YOUR_USERNAME/springboot-learning-kit.git
-```
-3. Create a new branch:
-```bash
-   git checkout -b your-feature-branch
-```
-4. Navigate to [Tasks](tasks) folder and kick off the work.
-
----
-
 ## **Pre-requisites**
+
+### IntelliJ IDEA 
+
+To work on this project, you need to have IntelliJ IDEA installed. It is a powerful IDE for Java development that 
+supports Spring Boot and Gradle. You can download the community version for free from
+ the [JetBrains website](https://www.jetbrains.com/idea/download/other.html#).
 
 ### **Docker**
 
@@ -70,6 +64,21 @@ popular choice for developers and database administrators.
   brew install --cask dbeaver-community
   ```
 - **Official Website**: [Download DBeaver](https://dbeaver.io/download/)
+
+---
+
+## Getting Started
+
+1. **Fork this repository** to your own GitHub account
+2. 📥 Clone your forked repository to your local machine:
+ ```bash
+   git clone https://github.com/YOUR_USERNAME/springboot-learning-kit.git
+```
+3. Create a new branch:
+```bash
+   git checkout -b your-feature-branch
+```
+4. Navigate to [Tasks](tasks) folder and kick off the work.
 
 ---
 
@@ -92,7 +101,13 @@ This project includes a **Bruno Collection** that contains all the APIs for easy
   RabbitMQ: OK
   Database: OK`
 
-_Make sure the application and required services (ActiveMQ and MSSQL) are running before testing the APIs._
+_Make sure the application and required services are running before testing the APIs._
+
+---
+
+## **Contributing**
+
+Contributions to this project are welcomed! If you have ideas, improvements, or bug fixes, please do raise an issue or submit a pull request.
 
 ---
 
