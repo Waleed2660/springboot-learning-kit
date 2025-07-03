@@ -18,8 +18,11 @@ public class OfflineOrderProcessor extends AbstractOrderProcessor {
     private final AddressService addressService;
     private final OrderItemService orderItemService;
 
-    public OfflineOrderProcessor(OrderService orderService, CustomerService customerService,
-                                 AddressService addressService, OrderItemService orderItemService) {
+    public OfflineOrderProcessor(
+            OrderService orderService,
+            CustomerService customerService,
+            AddressService addressService,
+            OrderItemService orderItemService) {
         super(orderService, customerService, addressService, orderItemService);
 
         this.orderService = orderService;
@@ -42,5 +45,4 @@ public class OfflineOrderProcessor extends AbstractOrderProcessor {
         // Call the saveOrder method from the parent class to save the order
         super.saveOrder(orderRequest);
     }
-
 }

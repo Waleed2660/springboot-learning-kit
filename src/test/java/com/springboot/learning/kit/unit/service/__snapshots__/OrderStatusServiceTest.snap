@@ -1,0 +1,18 @@
+com.springboot.learning.kit.unit.service.OrderStatusServiceTest.verifyOrderStatusResponse=[
+  {
+    "orderId": 1,
+    "orderType": "ONLINE",
+    "items": [
+      {
+        "productId": 101,
+        "quantity": 2,
+        "status": "CONFIRMED"
+      },
+      {
+        "productId": 102,
+        "quantity": 1,
+        "status": "PENDING"
+      }
+    ]
+  }
+]

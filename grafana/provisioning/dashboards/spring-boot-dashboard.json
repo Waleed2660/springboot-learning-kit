@@ -1,0 +1,71 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Spring Boot Application Monitoring",
+    "tags": ["spring-boot", "monitoring"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "HTTP Request Rate",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "sum(rate(http_server_requests_seconds_count[5m])) by (method, status)",
+            "legendFormat": "{{method}} - {{status}}"
+          }
+        ],
+        "unit": "reqps",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Database Operations Timing",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "rate(database_write_operations_seconds_sum[5m]) / rate(database_write_operations_seconds_count[5m])",
+            "legendFormat": "Write Operations"
+          },
+          {
+            "expr": "rate(database_read_operations_seconds_sum[5m]) / rate(database_read_operations_seconds_count[5m])",
+            "legendFormat": "Read Operations"
+          }
+        ],
+        "unit": "s",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "JVM Memory Usage",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "(jvm_memory_used_bytes{area=\"heap\"} / jvm_memory_max_bytes{area=\"heap\"}) * 100",
+            "legendFormat": "Heap Memory %"
+          }
+        ],
+        "unit": "percent",
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "Database Connection Pool",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "hikaricp_connections_active",
+            "legendFormat": "Active Connections"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8}
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "refresh": "30s"
+  }
+}
+

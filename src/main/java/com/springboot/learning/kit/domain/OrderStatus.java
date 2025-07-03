@@ -1,9 +1,8 @@
 package com.springboot.learning.kit.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Data

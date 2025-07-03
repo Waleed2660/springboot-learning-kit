@@ -7,6 +7,7 @@ import com.springboot.learning.kit.exception.OrderProcessingException;
 import com.springboot.learning.kit.service.OrderProcessingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +32,7 @@ public class NewOrderConsumer {
             log.error("Received new ActiveMQ order message");
             OrderRequest orderRequest = toOrderRequest(message);
             orderProcessingService.processNewOrder(orderRequest);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Failed to process ActiveMQ order message: {}", message, e);
             throw new OrderProcessingException("Failed to process order message: " + message, e);
         }
@@ -45,9 +45,14 @@ public class NewOrderConsumer {
      */
     @RabbitListener(queues = "${rmq.order.placement.queue}")
     public void processRabbitMQOrder(String message) {
-        log.error("Received new RabbitMQ order message");
-        OrderRequest orderRequest = toOrderRequest(message);
-        orderProcessingService.processNewOrder(orderRequest);
+        try {
+            log.error("Received new RabbitMQ order message");
+            OrderRequest orderRequest = toOrderRequest(message);
+            orderProcessingService.processNewOrder(orderRequest);
+        } catch (Exception e) {
+            log.error("Failed to process RabbitMQ order message: {}", message, e);
+            throw new AmqpRejectAndDontRequeueException("Non-retryable error", e);
+        }
     }
 
     private OrderRequest toOrderRequest(String message) {

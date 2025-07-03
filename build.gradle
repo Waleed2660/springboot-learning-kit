@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 	id 'org.liquibase.gradle' version '2.2.0'
+	id 'com.diffplug.spotless' version '7.0.4'
 }
 
 group = 'com.springboot.learning.kit'
@@ -63,6 +64,8 @@ dependencies {
 	implementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 	implementation "org.postgresql:postgresql:${postgresVersion}"
 
+	implementation "com.sun.mail:jakarta.mail:2.0.1"
+
 	// Lombok
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
 	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -86,6 +89,8 @@ dependencies {
 	testImplementation "org.testcontainers:junit-jupiter:${testContainerVersion}"
 	testImplementation "org.testcontainers:postgresql:${testContainerPostgresVersion}"
 	testImplementation "org.testcontainers:rabbitmq:${testContainerRabbitMQVersion}"
+	testImplementation 'io.github.origin-energy:java-snapshot-testing-junit5:4.0.8'
+	testImplementation 'io.github.origin-energy:java-snapshot-testing-plugin-jackson:4.0.8'
 	testImplementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
@@ -94,14 +99,21 @@ dependencies {
 liquibase {
 	activities {
 		main {
-			changelogFile 'src/main/resources/db/changelog/db.changelog-master.xml'
-			url 'jdbc:postgresql://localhost:5432/Order_Service'
-			username 'user'
-			password 'password'
-			driver 'org.postgresql.Driver'
+			defaultsFile 'src/main/resources/liquibase/liquibase.properties'
 		}
 	}
 	runList = 'main'
+}
+
+spotless {
+	java {
+		palantirJavaFormat()
+		// or use googleJavaFormat() for Google style guide
+	}
+}
+
+tasks.named('build') {
+	dependsOn 'spotlessApply'
 }
 
 tasks.named('test') {

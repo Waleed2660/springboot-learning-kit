@@ -49,5 +49,4 @@ public class ActiveMQConfig {
     public JmsTemplate jmsTemplate(ConnectionFactory connectionFactory) {
         return new JmsTemplate(connectionFactory);
     }
-
 }
