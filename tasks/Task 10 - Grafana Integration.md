@@ -220,26 +220,6 @@ implementation 'org.springframework.boot:spring-boot-starter-actuator'
 implementation 'io.micrometer:micrometer-registry-prometheus'
 ```
 
-### **Configure Timer Registry**
-
-The timer registry is automatically configured by Spring Boot, but you can customize it in your application properties:
-
-```yaml
-# application.yml
-management:
-  metrics:
-    enable:
-      all: true
-    export:
-      prometheus:
-        enabled: true
-    distribution:
-      percentiles-histogram:
-        http.server.requests: true
-        database.read.operations: true
-        database.write.operations: true
-```
-
 ### **Create Configuration Class**
 
 You need to create a configuration class to enable the `@Timed` aspect. Create a new class `MetricsConfig.java` in your
