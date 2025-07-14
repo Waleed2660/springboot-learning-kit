@@ -135,7 +135,7 @@ without specifying any profile, it'll fallback to `local` profile always.
 
 ### **Verify the Application is Healthy**
 
-Import the [Bruno Collection](../docs/SpringBoot%20Learning%20Kit%20-%20APIs) into your Bruno API client. You can find instructions [here](https://docs.usebruno.com/get-started/import-export-data/import-collections).
+Open the [Bruno Collection](../docs/SpringBoot%20Learning%20Kit%20-%20APIs) into your Bruno API client. You can find instructions [here](https://docs.usebruno.com/get-started/import-export-data/import-collections).
 
 Now, you can hit the HealthCheck API to verify that the application is up and running. You should get following response:
 
