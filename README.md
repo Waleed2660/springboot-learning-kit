@@ -2,11 +2,9 @@
 
 ## **Table of Contents**
 - [Introduction](#introduction)
-- [Tech Stack](#tech-stack)
+- [What You Will Learn](#what-you-will-learn)
+- [Tasks](#tasks)
 - [Getting Started](#getting-started)
-- [Pre-requisites](#pre-requisites)
-  - [Docker](#docker)
-  - [DBeaver](#dbeaver)
 - [API Collection](#api-collection)
 - [License](#license)
 
@@ -26,48 +24,44 @@ in building modern applications. The aim of this project is to:
 
 ---
 
-## **Tech Stack**
-- **Java**: Core programming language.
-- **Spring Boot**: Framework for building the application.
-- **Gradle**: Build automation tool.
-- **ActiveMQ**: Message broker for asynchronous communication.
-- **RabbitMQ**: Alternative message broker for asynchronous communication.
-- **PostgreSQL**: Relational database for data storage.
-- **Prometheus**: Monitoring and alerting toolkit.
-- **Grafana**: Visualization tool for monitoring data.
-- **Jmeter**: Java application performance monitoring tool.
-- **Docker**: Containerization platform for local development.
+## **What You Will Learn**
+
+Working through the tasks in this project will give you practical experience with the following:
+
+- **Spring Boot**: REST API design, request validation, custom exceptions, profiles, and application configuration
+- **Spring Data JPA + PostgreSQL**: entities, repositories, custom queries, and avoiding common pitfalls like N+1 writes
+- **Apache ActiveMQ + Apache Camel**: point-to-point queues, virtual topics, dead letter queues, and centralized route configuration
+- **RabbitMQ**: exchanges, bindings, dead letter exchanges, and message acknowledgement
+- **Liquibase**: database schema migrations, rollback scripts, and changelog management
+- **JUnit 5 + Mockito + TestContainers**: unit tests, integration tests, snapshot testing, and running tests against real Docker containers
+- **Prometheus + Micrometer**: exposing application metrics, custom `@Timed` annotations, and PromQL queries
+- **Grafana**: building dashboards, visualising HTTP and database metrics, and importing community dashboards
+- **Apache JMeter**: load testing, interpreting throughput and percentile results, and correlating load with Grafana dashboards
+- **Spotless + Palantir Java Format**: enforcing a consistent code style automatically as part of the build
+- **Docker + Docker Compose**: running and wiring together multiple services locally
 
 ---
 
-## **Pre-requisites**
+## **Tasks**
 
-### IntelliJ IDEA 
+Each task builds on the previous one and covers a specific area of the application. Navigate to the [tasks](tasks) folder to get started.
 
-To work on this project, you need to have IntelliJ IDEA installed. It is a powerful IDE for Java development that 
-supports Spring Boot and Gradle. You can download the community version for free from
- the [JetBrains website](https://www.jetbrains.com/idea/download/other.html#).
-
-### **Docker**
-
-Install Docker Desktop from [Docker's official website](https://www.docker.com/products/docker-desktop).
-
-### **DBeaver**
-
-DBeaver is a free, open-source database management tool that supports a wide range of databases, including MSSQL, MySQL,
-PostgreSQL, Oracle, and more. It provides a user-friendly interface for managing and querying databases, making it a 
-popular choice for developers and database administrators.
-
-#### **Download DBeaver Client**:
-- **MacOS**: Install via Homebrew:
-```bash
-  brew install --cask dbeaver-community
-  ```
-- **Official Website**: [Download DBeaver](https://dbeaver.io/download/)
+- **Task 01 - Project Setup**: spin up the database and messaging brokers, run the application, and verify everything is healthy
+- **Task 02 - Kicking off Development**: implement request validators, custom exceptions, and a new order status API
+- **Task 03 - Debug & Fix Critical Bug**: investigate a duplicate-insert bug, understand `EntityManager.persist()` vs `save()`, and fix transactional boundaries
+- **Task 04 - Apache ActiveMQ with Apache Camel**: configure Camel routes, consume from a queue, handle DLQs, and produce events to a Virtual Topic
+- **Task 05 - RabbitMQ with Spring Boot**: configure exchanges and bindings, fix an infinite redelivery bug, and publish messages to a topic exchange
+- **Task 06 - Database Schema Migration & Optimisation**: add a new table with Liquibase, generate and execute rollback SQL, and fix an N+1 database write
+- **Task 07 - Unit and Integration Tests**: write unit tests with Mockito, snapshot tests, and integration tests using TestContainers
+- **Task 08 - Code Style and Formatting**: configure Spotless with Palantir Java Format and automate formatting as part of the Gradle build
+- **Task 09 - Prometheus Metrics Integration**: expose application metrics via Spring Actuator and configure Prometheus scraping
+- **Task 10 - Grafana Integration**: connect Grafana to Prometheus, build dashboards, and add `@Timed` annotations for database operations
+- **Task 11 - Load Testing**: run load tests with Apache JMeter, interpret results, and observe the impact on Grafana dashboards
+- **Task 12 - Global Exception Handling**: replace per-controller try-catch blocks with `@ControllerAdvice` and adopt RFC 7807 Problem Details
 
 ---
 
-## Getting Started
+## **Getting Started**
 
 1. **Fork this repository** to your own GitHub account
 2. 📥 Clone your forked repository to your local machine:

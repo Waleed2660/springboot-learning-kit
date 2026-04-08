@@ -20,6 +20,17 @@ ensure consistency.
 
 ---
 
+## ⚠️ ⚠️ ⚠️ Update on Docker Engine v29 and TestContainers Compatibility
+As of Docker Engine v29, there have been significant changes that affect how TestContainers interacts with Docker.
+The main issue is that TestContainers relies on certain Docker APIs that have been deprecated in Docker 
+Engine v29. This has led to compatibility issues, causing TestContainers to fail when trying to start containers or interact with Docker.
+
+Run following command in your terminal to address this issue by setting the Docker API version to 1.44, which is 
+compatible with TestContainers version we're using in this project:
+```bash
+  echo api.version=1.44 >> ~/.docker-java.properties
+```
+
 ## Test Folder Structure
 
 I've already added some basic unit & integration tests, the TestContainers are also configured in [TestContainersConfig.java](../src/test/java/com/springboot/learning/kit/config/TestContainersConfig.java) class.
