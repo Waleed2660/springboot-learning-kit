@@ -3,7 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'org.asciidoctor.jvm.convert' version '4.0.3'
-	id 'org.liquibase.gradle' version '2.2.0'
+	id 'org.liquibase.gradle' version '3.0.2'
 }
 
 group = 'com.springboot.learning.kit'
@@ -32,13 +32,13 @@ ext {
 
 dependencies {
 
-	def springBootVersion = '3.4.4'
+	def springBootVersion = '3.5.7'
 	def camelVersion = '4.4.0'
 	def postgresVersion = '42.7.2'
-	def liquibaseVersion = '4.29.2'
+	def liquibaseVersion = '5.0.1'
 	def picocliVersion = '4.7.5'
-	def prometheusVersion = '1.14.5'
-	def lombokVersion = '1.18.36'
+	def prometheusVersion = '1.15.5'
+	def lombokVersion = '1.18.42'
 	def springRestDocsVersion = '3.0.3'
 	def testContainerVersion = '1.20.6'
 	def testContainerPostgresVersion = '1.19.0'
