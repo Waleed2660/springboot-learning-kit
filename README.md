@@ -1,5 +1,7 @@
 # Spring Boot Learning Kit
 
+[![oosmetrics](https://api.oosmetrics.com/api/v1/badge/achievement/6b9da633-20de-41db-b743-4c55ee36e80f.svg)](https://oosmetrics.com/repo/Waleed2660/springboot-learning-kit)
+
 ## **Table of Contents**
 - [Introduction](#introduction)
 - [What You Will Learn](#what-you-will-learn)
