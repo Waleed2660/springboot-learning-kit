@@ -2,7 +2,9 @@ package com.springboot.learning.kit.service;
 
 import com.springboot.learning.kit.dto.request.OrderRequest;
 import com.springboot.learning.kit.exception.OrderValidationException;
+import com.springboot.learning.kit.validator.CustomerDetailsValidator;
 import com.springboot.learning.kit.validator.OrderTypeValidator;
+import com.springboot.learning.kit.validator.OrderUUIDValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,10 @@ public class OrderValidationService {
 
     private final OrderTypeValidator orderTypeValidator;
 
+    private final OrderUUIDValidator orderUUIDValidator;
+
+    private final CustomerDetailsValidator customerDetailsValidator;
+
     /**
      * Validates the given order.
      *
@@ -20,5 +26,7 @@ public class OrderValidationService {
      */
     public void validateOrder(OrderRequest orderRequest) {
         orderTypeValidator.validate(orderRequest.getOrderType());
+        orderUUIDValidator.validate(orderRequest.getUUID());
+        customerDetailsValidator.validate(orderRequest.getCustomerDetails());
     }
 }
