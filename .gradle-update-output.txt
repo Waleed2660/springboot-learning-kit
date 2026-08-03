@@ -1,0 +1,73 @@
+
+> Task :update
+liquibase-plugin: Running the 'main' activity...
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##                                                ##
+####################################################
+Starting Liquibase at 18:21:26 using Java 17.0.19 (version 4.29.2 #3683 built at 2024-08-29 16:45+0000)
+[2026-06-26 18:21:26] INFO [liquibase.ui] ####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##                                                ##
+####################################################
+Starting Liquibase at 18:21:26 using Java 17.0.19 (version 4.29.2 #3683 built at 2024-08-29 16:45+0000)
+Liquibase Version: 4.29.2
+[2026-06-26 18:21:26] INFO [liquibase.ui] Liquibase Version: 4.29.2
+WARNING: License service not loaded, cannot determine Liquibase Pro license status. Please consider re-installing Liquibase to include all dependencies. Continuing operation without Pro license.
+[2026-06-26 18:21:26] INFO [liquibase.ui] WARNING: License service not loaded, cannot determine Liquibase Pro license status. Please consider re-installing Liquibase to include all dependencies. Continuing operation without Pro license.
+[2026-06-26 18:21:26] INFO [liquibase.integration] Starting command execution.
+[2026-06-26 18:21:26] WARNING [liquibase.command] Ignoring the global liquibase.driver value in favor of the command value.
+[2026-06-26 18:21:26] INFO [liquibase.database] Set default schema name to public
+[2026-06-26 18:21:27] INFO [liquibase.changelog] Reading from public.databasechangelog
+Database is up to date, no changesets to execute
+[2026-06-26 18:21:27] INFO [liquibase.ui] Database is up to date, no changesets to execute
+[2026-06-26 18:21:27] INFO [liquibase.changelog] Reading from public.databasechangelog
+
+UPDATE SUMMARY
+Run:                          0
+Previously run:               6
+Filtered out:                 0
+-------------------------------
+Total change sets:            6
+
+[2026-06-26 18:21:27] INFO [liquibase.util] UPDATE SUMMARY
+[2026-06-26 18:21:27] INFO [liquibase.util] Run:                          0
+[2026-06-26 18:21:27] INFO [liquibase.util] Previously run:               6
+[2026-06-26 18:21:27] INFO [liquibase.util] Filtered out:                 0
+[2026-06-26 18:21:27] INFO [liquibase.util] -------------------------------
+[2026-06-26 18:21:27] INFO [liquibase.util] Total change sets:            6
+[2026-06-26 18:21:27] INFO [liquibase.util] Update summary generated
+[2026-06-26 18:21:27] INFO [liquibase.command] Command execution complete
+Liquibase command 'update' was executed successfully.
+[2026-06-26 18:21:27] INFO [liquibase.ui] Liquibase command 'update' was executed successfully.
+
+[Incubating] Problems report is available at: file:///C:/Users/Tejas%20B%20V/springboot-learning-kit/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6s
+1 actionable task: 1 executed

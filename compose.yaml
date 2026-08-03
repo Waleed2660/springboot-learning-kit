@@ -12,6 +12,7 @@ services:
       POSTGRES_DB: Order_Service
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+      TZ: UTC
     ports:
       - "5432:5432" # PostgreSQL port
   rabbitmq:

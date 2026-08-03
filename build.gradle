@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.JavaExec
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.4'
@@ -89,6 +91,20 @@ dependencies {
 	testImplementation "org.liquibase:liquibase-core:${liquibaseVersion}"
 
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher:${junitPlatformVersion}"
+}
+
+bootRun {
+    jvmArgs = ['-Duser.timezone=UTC']
+}
+
+tasks.withType(org.gradle.api.tasks.JavaExec).configureEach {
+    if (!jvmArgs.contains('-Duser.timezone=UTC')) {
+        jvmArgs += ['-Duser.timezone=UTC']
+    }
+}
+
+tasks.withType(org.liquibase.gradle.LiquibaseTask).configureEach {
+    jvmArgs = ['-Duser.timezone=UTC']
 }
 
 liquibase {
