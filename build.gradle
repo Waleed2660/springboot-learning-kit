@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.asciidoctor.jvm.convert' version '4.0.3'
+	id 'org.asciidoctor.jvm.convert' version '4.0.5'
 	id 'org.liquibase.gradle' version '2.2.0'
 }
 
@@ -33,17 +33,17 @@ ext {
 dependencies {
 
 	def springBootVersion = '3.4.4'
-	def camelVersion = '4.4.0'
+	def camelVersion = '4.15.0'
 	def postgresVersion = '42.7.2'
 	def liquibaseVersion = '4.29.2'
-	def picocliVersion = '4.7.5'
+	def picocliVersion = '4.7.7'
 	def prometheusVersion = '1.14.5'
 	def lombokVersion = '1.18.36'
 	def springRestDocsVersion = '3.0.3'
 	def testContainerVersion = '1.20.6'
 	def testContainerPostgresVersion = '1.19.0'
-	def junitPlatformVersion = '1.11.4'
-	def openApiSpringDocsVersion = '2.8.6'
+	def junitPlatformVersion = '6.0.1'
+	def openApiSpringDocsVersion = '2.8.13'
 	def testContainerRabbitMQVersion = '1.21.2'
 
 	implementation "org.springframework.boot:spring-boot-starter-activemq:${springBootVersion}"
